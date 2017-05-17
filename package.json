@@ -1,0 +1,51 @@
+{
+  "name": "sp-pnp-node",
+  "description": "SharePoint JavaScript Core Library (PnP JS Core) wrapper helper for Node.js",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "typings": "./dist/index",
+  "scripts": {
+    "build": "npm install && gulp tsc"
+  },
+  "keywords": [
+    "sharepoint",
+    "rest",
+    "sp-pnp-js",
+    "wrapper",
+    "nodejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koltyakov/sp-pnp-node.git"
+  },
+  "author": "Andrew Koltyakov <andrew.koltyakov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koltyakov/sp-pnp-node/issues"
+  },
+  "homepage": "https://github.com/koltyakov/sp-pnp-node#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "https": "^1.0.0",
+    "node-fetch": "^1.6.3",
+    "node-sp-auth": "^1.3.3",
+    "node-sp-auth-config": "^1.0.9",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.0.35",
+    "@types/node": "^6.0.73",
+    "@types/node-fetch": "^1.6.7",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "merge-stream": "^1.0.1",
+    "sp-pnp-js": "^2.0.5",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2",
+    "yargs": "^8.0.1"
+  }
+}

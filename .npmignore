@@ -1,0 +1,7 @@
+.vscode
+/tests
+/config/private.json
+npm-debug.log
+/src
+/docs
+!/dist
