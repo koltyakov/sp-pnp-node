@@ -35,10 +35,10 @@ Then start using it in server side JavaScript or TypeScript.
 **Usage in TypeScript**
 
 ```javascript
-import { PnPNode } from 'sp-pnp-node';
+import { PnpNode } from 'sp-pnp-node';
 import { Web } from 'sp-pnp-js';
 
-(new PnPNode()).init().then((settings) => {
+(new PnpNode()).init().then((settings) => {
 
     // Here goes PnP JS Core code
     let web: Web = new Web(settings.siteUrl);
@@ -50,10 +50,10 @@ import { Web } from 'sp-pnp-js';
 **Usage in ES6**
 
 ```javascript
-const PnPNode = require('sp-pnp-node').PnPNode;
+const PnpNode = require('sp-pnp-node').PnPNode;
 const pnp = require('sp-pnp-js');
 
-(new PnPNode()).init().then((settings) => {
+(new PnpNode()).init().then((settings) => {
 
     // Here goes PnP JS Core code
     let web = new pnp.Web(settings.siteUrl);

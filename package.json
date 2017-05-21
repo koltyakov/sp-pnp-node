@@ -1,7 +1,7 @@
 {
   "name": "sp-pnp-node",
   "description": "SharePoint JavaScript Core Library (PnP JS Core) wrapper helper for Node.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
