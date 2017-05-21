@@ -5,14 +5,14 @@ const merge = require('merge-stream');
 const tslint = require('gulp-tslint');
 const tsc = require('gulp-typescript');
 
-const tsconfig = require('./tsconfig.json');
-
+// Clean distribution folder (before publishing)
 gulp.task('clean', () => {
     const del = require('del');
     return del(['dist/**']);
 });
 
-gulp.task('prepublish', ['clean'], () => {
+// Prepare package before publishing to NPM
+gulp.task('prepublish', [ 'clean' ], () => {
     let tsSourcesResult = gulp
         .src(['./src/**/*.ts'])
         .pipe(tsc.createProject('tsconfig.json')());
@@ -23,6 +23,7 @@ gulp.task('prepublish', ['clean'], () => {
     ];
 });
 
+// Transpile TypeScript
 gulp.task('tsc', () => {
     const sourcemaps = require('gulp-sourcemaps');
 
@@ -40,6 +41,7 @@ gulp.task('tsc', () => {
     return merge(sources, declarations);
 });
 
+// Run lint
 gulp.task('tslint', () => {
     const yargs = require('yargs');
     let emitError = yargs.argv.emitError;

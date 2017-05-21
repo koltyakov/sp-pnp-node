@@ -4,47 +4,36 @@ import fetch from 'node-fetch';
 import * as https from 'https';
 import * as Promise from 'bluebird';
 import * as path from 'path';
-import * as url from 'url';
 import { IAuthOptions } from 'node-sp-auth';
-import { AuthConfig } from 'node-sp-auth-config';
+import { AuthConfig as SPAuthConfigirator } from 'node-sp-auth-config';
+
+import { IPnpNodeSettings } from './interfaces';
 
 declare var global: any;
 
-export interface IAuthConf {
-    configPath?: string;
-    encryptPassword?: boolean;
-    saveConfigOnDisk?: boolean;
-}
+export class PnpNode {
 
-export interface IPnPNodeSettings {
-    siteUrl?: string;
-    authOptions?: IAuthOptions;
-    config?: IAuthConf;
-}
+    private settings: IPnpNodeSettings;
+    private spAuthConfigirator: SPAuthConfigirator;
 
-export class PnPNode {
-
-    private settings: IPnPNodeSettings;
-    private authConfig: AuthConfig;
-
-    constructor(settings: IPnPNodeSettings = {}) {
+    constructor(settings: IPnpNodeSettings = {}) {
         let config = settings.config || {};
         this.settings = {
             ...settings,
             config: {
                 ...config,
-                configPath: path.resolve(config.configPath || './config/private.json'),
+                configPath: path.resolve(config.configPath || path.join(process.cwd(), 'config/private.json')),
                 encryptPassword: typeof config.encryptPassword !== 'undefined' ? config.encryptPassword : true,
                 saveConfigOnDisk: typeof config.saveConfigOnDisk !== 'undefined' ? config.saveConfigOnDisk : true
             }
         };
-        this.authConfig = new AuthConfig(this.settings.config);
+        this.spAuthConfigirator = new SPAuthConfigirator(this.settings.config);
     }
 
-    public init(): Promise<any> {
+    public init(): Promise<IPnpNodeSettings> {
         return new Promise((resolve, reject) => {
             if (typeof this.settings.authOptions === 'undefined') {
-                this.authConfig.getContext()
+                this.spAuthConfigirator.getContext()
                     .then((context) => {
                         this.settings = {
                             ...this.settings,
@@ -84,7 +73,7 @@ export class PnPNode {
                     };
                     fetchOptions.headers = headers;
 
-                    let isHttps: boolean = url.parse(requestUrl).protocol === 'https:';
+                    let isHttps: boolean = requestUrl.split('://')[0].toLowerCase() === 'https';
 
                     if (isHttps && !fetchOptions.agent) {
                         /* Bypassing ssl certificate errors (self signed, etc) for on-premise */
@@ -100,3 +89,5 @@ export class PnPNode {
     }
 
 }
+
+export { IPnpNodeSettings } from './interfaces';

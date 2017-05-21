@@ -38,53 +38,130 @@ yarn add sp-pnp-node sp-pnp-js --save
 ### TypeScript
 
 ```javascript
-import { PnPNode } from 'sp-pnp-node';
 import { Web } from 'sp-pnp-js';
+import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
-const pnpNode = new PnPNode();
+let optionalInitSettings: IPnpNodeSettings = { 
+    // ...
+};
 
-pnpNode.init().then((settings) => {
+(new PnpNode(optionalInitSettings)).init().then((settings: IPnpNodeSettings) => {
 
-    // Here goes PnP JS Core code
+    // Here goes PnP JS Core code >>>
+
     let web = new Web(settings.siteUrl);
-    web.get().then(console.log);
+    // Any SPWeb url can be used for `new Web(...)`
+    // not necessarily which is provided in `optionalInitSettings`
 
-});
+    // Get all list example
+    web.lists.get()
+        .then(lists => {
+            console.log(lists.map(list => list.Title));
+        })
+        .catch(console.log);
+
+    // <<< Here goes PnP JS Core code
+
+}).catch(console.log);
 ```
 
 ### JavaScript
 
 ```javascript
-const PnPNode = require('sp-pnp-node').PnPNode;
 const pnp = require('sp-pnp-js');
+const PnpNode = require('sp-pnp-node').PnpNode;
 
-const pnpNode = new PnPNode();
+(new PnpNode()).init().then(settings => {
 
-pnpNode.init().then((settings) => {
+    // Here goes PnP JS Core code >>>
 
-    // Here goes PnP JS Core code
     let web = new pnp.Web(settings.siteUrl);
-    web.get().then(console.log);
 
-});
+    // Get all content types example
+    web.contentTypes.get()
+        .then(cts => {
+            console.log(cts.map(ct => {
+                return {
+                    name: ct.Name,
+                    description: ct.Description
+                };
+            }));
+        })
+        .catch(console.log);
+
+    // <<< Here goes PnP JS Core code
+
+}).catch(console.log);
+```
+
+### OData Metadata modes
+
+```javascript
+import { Web, setup as pnpsetup } from 'sp-pnp-js';
+import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
+
+(new PnpNode()).init().then((settings: IPnpNodeSettings) => {
+
+    pnpsetup({
+        headers: {
+            // 'Accept': 'application/json;odata=verbose'
+            'Accept': 'application/json;odata=minimalmetadata'
+            // 'Accept': 'application/json;odata=nometadata'
+        }
+    });
+
+    // ...
+
+}).catch(console.log);
 ```
 
 ## Initiation settings
 
 ```javascript
-new PnPNode(settings: IPnPNodeSettings);
+import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
+
+let pnpNodeSettings: IPnpNodeSettings = {
+    /// ...
+};
+
+(new PnpNode(pnpNodeSettings)).init().then((settings: IPnpNodeSettings) => {
+
+    // Here goes PnP JS Core code
+
+}).catch(console.log);
 ```
 
-### PnP Node Settings (IPnPNodeSettings) options:
+### PnP Node Settings options:
 
-- siteUrl?: string;
+- siteUrl?: string; // Optional SPWeb url
 - authOptions?: IAuthOptions; `node-sp-auth` [credentials options](https://github.com/s-KaiNet/node-sp-auth)
 - config?: IAuthConf; `node-sp-auth-config` [options](https://github.com/koltyakov/node-sp-auth-config)
   - configPath?: string; // Path to auth config .json | Default is './config/private.json'
-  - encryptPassword?: boolean; // Encrypt password to a machine-bind hash | Default is 'true'
-  - saveConfigOnDisk?: boolean; // Save config .json to disk | Default is 'true'
+  - encryptPassword?: boolean; // Encrypts password to a machine-bind hash | Default is 'true'
+  - saveConfigOnDisk?: boolean; // Saves config .json to disk | Default is 'true'
 
 Settings can be left blank. Auth options in such a case will be asked by `node-sp-auth-config` [options](https://github.com/koltyakov/node-sp-auth-config) in a wizard like approach.
+
+### Settings scenarios
+
+- No initial settings (defaults): wizard approach, covers console applications cases with user interaction
+- With explicitly defined `authOptions`:
+  - external tools is in charge for preparing auth credentials in `node-sp-auth` format
+  - credentials should not be dumped on disc
+- Config file with prepopulated credentials: schedule, job automation, continues integration
+
+## Supported authentication scenarios
+
+- SharePoint On-Premise (2013, 2016):
+  - User credentials (NTLM)
+  - Form-based authentication (FBA)
+  - Add-In Only permissions
+  - ADFS user credentials
+
+- SharePoint Online:
+  - User credentials (SAML)
+  - Add-In Only permissions
+  - ADFS user credentials
 
 ## Inspiration and references
 

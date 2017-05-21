@@ -1,7 +1,7 @@
 const pnp = require('sp-pnp-js');
-const PnPNode = require('../dist').PnPNode;
+const PnpNode = require('../dist').PnpNode;
 
-const pnpNode = new PnPNode();
+const pnpNode = new PnpNode();
 
 pnpNode.init().then((settings) => {
 
@@ -17,4 +17,4 @@ pnpNode.init().then((settings) => {
         console.log(resp);
     });
 
-});
+}).catch(console.log);

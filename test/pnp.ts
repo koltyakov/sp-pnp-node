@@ -1,9 +1,13 @@
 import { Web, setup as pnpsetup } from 'sp-pnp-js';
-import { PnPNode } from '../src';
+import { PnpNode, IPnpNodeSettings } from '../src';
 
-const pnpNode = new PnPNode();
+let pnpNodeSettings: IPnpNodeSettings = {
+    // ...
+};
 
-pnpNode.init().then((settings) => {
+const pnpNode = new PnpNode(pnpNodeSettings);
+
+pnpNode.init().then((settings: IPnpNodeSettings) => {
 
     let web: Web = new Web(settings.siteUrl);
 
@@ -17,4 +21,4 @@ pnpNode.init().then((settings) => {
         console.log(resp);
     });
 
-});
+}).catch(console.log);
