@@ -35,6 +35,23 @@ yarn add sp-pnp-node sp-pnp-js --save
 
 ## Usage examples
 
+
+### Minimal setup
+
+Can be as simple as 5 lines of code:
+
+```javascript
+import { Web } from 'sp-pnp-js';
+import { PnpNode } from 'sp-pnp-node';
+
+(new PnpNode()).initAmbient().then((settings) => {
+
+    let web = new Web(settings.siteUrl);
+    /// ... // <<< Here goes PnP JS Core code
+
+}).catch(console.log);
+```
+
 `sp-pnp-node` has two modes:
 - ambient - wraps `sp-pnp-js` with promise based auth wizard helper
 - factory - `fetchClientFactory` implementation
@@ -51,7 +68,7 @@ let optionalInitSettings: IPnpNodeSettings = {
     // ...
 };
 
-(new PnpNode(optionalInitSettings)).init().then((settings: IPnpNodeSettings) => {
+(new PnpNode(optionalInitSettings)).initAmbient().then((settings: IPnpNodeSettings) => {
 
     // Here goes PnP JS Core code >>>
 
@@ -116,7 +133,7 @@ pnp.sp.web.get()
 const pnp = require('sp-pnp-js');
 const PnpNode = require('sp-pnp-node').PnpNode;
 
-(new PnpNode()).init().then(settings => {
+(new PnpNode()).initAmbient().then(settings => {
 
     // Here goes PnP JS Core code >>>
 
@@ -145,7 +162,7 @@ const PnpNode = require('sp-pnp-node').PnpNode;
 import { Web, setup as pnpsetup } from 'sp-pnp-js';
 import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
-(new PnpNode()).init().then((settings: IPnpNodeSettings) => {
+(new PnpNode()).initAmbient().then((settings: IPnpNodeSettings) => {
 
     pnpsetup({
         headers: {
@@ -169,7 +186,7 @@ let pnpNodeSettings: IPnpNodeSettings = {
     /// ...
 };
 
-(new PnpNode(pnpNodeSettings)).init().then((settings: IPnpNodeSettings) => {
+(new PnpNode(pnpNodeSettings)).initAmbient().then((settings: IPnpNodeSettings) => {
 
     // Here goes PnP JS Core code
 
@@ -183,7 +200,7 @@ import { PnpNode } from 'sp-pnp-node';
 
 declare const global: any;
 
-(new PnpNode()).init().then((settings) => {
+(new PnpNode()).initAmbient().then((settings) => {
 
     // Any raw RESP API requests with Fetch client
     global.fetch(`${settings.siteUrl}/_api/web`, {
