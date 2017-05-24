@@ -52,6 +52,8 @@ import { PnpNode } from 'sp-pnp-node';
 }).catch(console.log);
 ```
 
+![demo](https://github.com/koltyakov/sp-pnp-node/blob/master/docs/demo.gif)
+
 `sp-pnp-node` has two modes:
 - ambient - wraps `sp-pnp-js` with promise based auth wizard helper
 - factory - `fetchClientFactory` implementation
