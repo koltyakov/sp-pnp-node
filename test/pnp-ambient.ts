@@ -7,7 +7,7 @@ let pnpNodeSettings: IPnpNodeSettings = {
 
 const pnpNode = new PnpNode(pnpNodeSettings);
 
-pnpNode.init().then((settings: IPnpNodeSettings) => {
+pnpNode.initAmbient().then((settings: IPnpNodeSettings) => {
 
     let web: Web = new Web(settings.siteUrl);
 
@@ -17,8 +17,10 @@ pnpNode.init().then((settings: IPnpNodeSettings) => {
         }
     });
 
-    web.get().then(resp => {
-        console.log(resp);
-    });
+    web.get()
+        .then(resp => {
+            console.log(resp);
+        })
+        .catch(console.log);
 
 }).catch(console.log);

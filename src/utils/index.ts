@@ -1,3 +1,5 @@
+import { Headers, Request } from 'node-fetch';
+
 export class Utils {
 
     public checkNestedProperties(object: any, ...args: string[]): boolean {
@@ -18,6 +20,31 @@ export class Utils {
             }
             return res;
         }, undefined);
+    }
+
+    public isUrlHttps(url: string): boolean {
+        return url.split('://')[0].toLowerCase() === 'https';
+    }
+
+    public isUrlAbsolute(url: string): boolean {
+        return url.indexOf('http:') === 0 || url.indexOf('https:') === 0;
+    }
+
+    public combineUrl(...args: string[]): string {
+        return args.join('/').replace(/(\/)+/g, '/').replace(':/', '://');
+    }
+
+    public mergeHeaders(...args: any[]): Headers {
+        return args.reduce((headers: Headers, headersPatch: any) => {
+            this.anyToHeaders(headersPatch).forEach((value: string, name: string) => {
+                headers.set(name, value);
+            });
+            return headers;
+        }, new Headers());
+    }
+
+    public anyToHeaders(headers: any = {}): Headers {
+        return (new Request('', { headers })).headers;
     }
 
 }

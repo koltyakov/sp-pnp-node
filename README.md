@@ -35,7 +35,13 @@ yarn add sp-pnp-node sp-pnp-js --save
 
 ## Usage examples
 
+`sp-pnp-node` has two modes:
+- ambient - wraps `sp-pnp-js` with promise based auth wizard helper
+- factory - `fetchClientFactory` implementation
+
 ### TypeScript
+
+#### Ambient example
 
 ```javascript
 import { Web } from 'sp-pnp-js';
@@ -63,6 +69,45 @@ let optionalInitSettings: IPnpNodeSettings = {
     // <<< Here goes PnP JS Core code
 
 }).catch(console.log);
+```
+
+#### Factory example
+
+```javascript
+import * as pnp from 'sp-pnp-js';
+import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
+
+let config = require('../config/private.json');
+
+let pnpNodeSettings: IPnpNodeSettings = {
+    // siteUrl - Optional if baseUrl is in pnp.setup or in case of `new Web(url)`
+    siteUrl: config.siteUrl,
+    authOptions: config
+};
+
+pnp.setup({
+    fetchClientFactory: () => {
+        return new PnpNode(pnpNodeSettings);
+    },
+    // baseUrl - Optional if siteUrl is in IPnpNodeSettings or in case of `new Web(url)`
+    baseUrl: config.siteUrl
+});
+
+pnp.sp.web.get()
+    .then(resp => {
+        console.log(resp);
+    })
+    .catch(console.log);
+
+// Or
+
+/*
+(new pnp.sp.Web('http://adhoc.url/sites/site')).get()
+    .then(resp => {
+        console.log(resp);
+    })
+    .catch(console.log);
+*/
 ```
 
 ### JavaScript
