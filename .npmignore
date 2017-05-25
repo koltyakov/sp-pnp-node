@@ -1,12 +1,12 @@
 !/dist
 /src
 /config/private.json
-/node_modules
+node_modules
 /docs
 /test
 .vscode
 npm-debug.log
 gulpfile.json
-README.node_modulestsconfig.json
+tsconfig.json
 tslint.json
 yarn.lock
