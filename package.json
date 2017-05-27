@@ -1,12 +1,12 @@
 {
   "name": "sp-pnp-node",
   "description": "SharePoint JavaScript Core Library (PnP JS Core) wrapper helper for Node.js",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
     "build": "npm install && gulp tsc",
-    "test": "mocha --opts test/mocha.opts"
+    "test": "ts-node ./test/init && mocha --opts test/mocha.opts"
   },
   "keywords": [
     "sharepoint",
@@ -29,7 +29,7 @@
     "https": "^1.0.0",
     "node-fetch": "^1.6.3",
     "node-sp-auth": "^1.3.3",
-    "node-sp-auth-config": "^1.1.0",
+    "node-sp-auth-config": "^1.1.1",
     "sp-pnp-js": "^2.0.5"
   },
   "devDependencies": {

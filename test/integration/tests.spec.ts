@@ -5,7 +5,7 @@ import * as sprequest from 'sp-request';
 
 import { PnpNode, IPnpNodeSettings } from '../../src';
 
-import { TestsConfigs } from './configs';
+import { TestsConfigs } from '../configs';
 
 const cpass = new (require('cpass'))();
 

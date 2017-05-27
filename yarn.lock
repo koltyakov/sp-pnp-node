@@ -1700,9 +1700,9 @@ node-fetch@^1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-sp-auth-config@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-1.1.0.tgz#3402050eba70b78d8440d742a777a13981f8a3a7"
+node-sp-auth-config@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-1.1.1.tgz#059a0d868f291f76022a61e299785daa45d3d43e"
   dependencies:
     bluebird "^3.5.0"
     colors "^1.1.2"
