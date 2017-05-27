@@ -6,7 +6,7 @@
   "typings": "./dist/index",
   "scripts": {
     "build": "npm install && gulp tsc",
-    "test": "ts-node ./test/init && mocha --opts test/mocha.opts"
+    "test": "ts-node ./test/init && mocha --opts test/mocha.opts || ECHO."
   },
   "keywords": [
     "sharepoint",
