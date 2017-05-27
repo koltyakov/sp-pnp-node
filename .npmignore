@@ -4,6 +4,7 @@
 node_modules
 /docs
 /test
+/examples
 .vscode
 npm-debug.log
 gulpfile.json

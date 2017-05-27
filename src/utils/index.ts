@@ -22,6 +22,10 @@ export class Utils {
         }, undefined);
     }
 
+    public isOnPrem(url: string): boolean {
+        return url.indexOf('.sharepoint.com') === -1 && url.indexOf('.sharepoint.cn') === -1;
+    }
+
     public isUrlHttps(url: string): boolean {
         return url.split('://')[0].toLowerCase() === 'https';
     }

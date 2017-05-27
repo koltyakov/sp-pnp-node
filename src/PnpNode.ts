@@ -47,6 +47,14 @@ export class PnpNode implements HttpClientImpl {
         if (!this.utils.isUrlAbsolute(url)) {
             url = this.utils.combineUrl(this.settings.siteUrl, url);
         }
+
+        // if (options.method === 'POST') {
+        //     console.log(
+        //         url, options.method,
+        //         this.utils.anyToHeaders(options.headers).get('x-requestdigest')
+        //     );
+        // }
+
         // Authenticate with node-sp-auth and inject auth headers
         return <any>spauth.getAuth(url, this.settings.authOptions)
             .then((data: any) => {
@@ -60,6 +68,15 @@ export class PnpNode implements HttpClientImpl {
                         'Content-Type': 'application/json;odata=verbose'
                     }, options.headers, data.headers)
                 };
+
+                // On-Prem 2013 issue with `accept: application/json`
+                // On-Prem 2016 is sacrificed to be treaten as 2013 for now
+                if (this.utils.isOnPrem(url)) {
+                    const disallowed = [ 'application/json' ];
+                    if (disallowed.indexOf(fetchOptions.headers.get('accept')) !== -1) {
+                        fetchOptions.headers.set('accept', 'application/json;odata=verbose');
+                    }
+                }
 
                 if (this.utils.isUrlHttps(url) && !fetchOptions.agent) {
                     // Bypassing ssl certificate errors (self signed, etc) for on-premise
