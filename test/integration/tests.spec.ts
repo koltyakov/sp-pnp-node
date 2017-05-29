@@ -20,7 +20,7 @@ for (let testConfig of TestsConfigs) {
         let request: sprequest.ISPRequest;
         let config: any;
 
-        before('Configure PnP for Node.js', function (done: any): void {
+        before('Configure PnP for Node.js', function(done: any): void {
             this.timeout(30 * 1000);
 
             config = require(path.resolve(testConfig.configPath));
@@ -42,7 +42,7 @@ for (let testConfig of TestsConfigs) {
             done();
         });
 
-        it(`should get web's title`, function (done: MochaDone): void {
+        it(`should get web's title`, function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             request.get(`${config.siteUrl}/_api/web?$select=Title`)
@@ -59,7 +59,7 @@ for (let testConfig of TestsConfigs) {
                 .catch(done);
         });
 
-        it(`should get lists on web`, function (done: MochaDone): void {
+        it(`should get lists on web`, function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             request.get(`${config.siteUrl}/_api/web/lists?$select=Title`)
@@ -76,7 +76,7 @@ for (let testConfig of TestsConfigs) {
                 .catch(done);
         });
 
-        it('should create a new list', function (done: MochaDone): void {
+        it('should create a new list', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             let web = new pnp.Web(config.siteUrl);
@@ -91,7 +91,7 @@ for (let testConfig of TestsConfigs) {
                 .catch(done);
         });
 
-        it('should create list item', function (done: MochaDone): void {
+        it('should create list item', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             let web = new pnp.Web(config.siteUrl);
@@ -107,7 +107,7 @@ for (let testConfig of TestsConfigs) {
                 .catch(done);
         });
 
-        it('should delete list item', function (done: MochaDone): void {
+        it('should delete list item', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             let web = new pnp.Web(config.siteUrl);
@@ -125,7 +125,7 @@ for (let testConfig of TestsConfigs) {
         // SharePoint Online and On-Premise 2016 only
         if (!testConfig.legacy) {
 
-            it(`should fetch minimalmetadata`, function (done: MochaDone): void {
+            it(`should fetch minimalmetadata`, function(done: MochaDone): void {
                 this.timeout(30 * 1000);
 
                 pnp.setup({
@@ -148,7 +148,7 @@ for (let testConfig of TestsConfigs) {
 
             });
 
-            it(`should fetch nometadata`, function (done: MochaDone): void {
+            it(`should fetch nometadata`, function(done: MochaDone): void {
                 this.timeout(30 * 1000);
 
                 pnp.setup({
@@ -172,7 +172,7 @@ for (let testConfig of TestsConfigs) {
 
             });
 
-            it('should create list items in batch', function (done: MochaDone): void {
+            it('should create list items in batch', function(done: MochaDone): void {
                 this.timeout(30 * 1000);
 
                 let dragons = [ 'Jineoss',  'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
@@ -194,7 +194,7 @@ for (let testConfig of TestsConfigs) {
                     .catch(done);
             });
 
-            it('should delete list items in batch', function (done: MochaDone): void {
+            it('should delete list items in batch', function(done: MochaDone): void {
                 this.timeout(30 * 1000);
 
                 let web = new pnp.Web(config.siteUrl);
@@ -221,7 +221,7 @@ for (let testConfig of TestsConfigs) {
 
         /*
         // DigestCache issue
-        it('should create a new list', function (done: MochaDone): void {
+        it('should create a new list', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             pnp.sp.web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
@@ -236,7 +236,7 @@ for (let testConfig of TestsConfigs) {
         });
         */
 
-        it('should correctly consume baseUrl setting', function (done: MochaDone): void {
+        it('should correctly consume baseUrl setting', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             pnp.setup({
@@ -262,7 +262,7 @@ for (let testConfig of TestsConfigs) {
                 .catch(done);
         });
 
-        after('Deleting test objects', function (done: MochaDone): void {
+        after('Deleting test objects', function(done: MochaDone): void {
             this.timeout(30 * 1000);
 
             let digest: string;
