@@ -1,7 +1,8 @@
 !/dist
-/src
-/config/private.json
 node_modules
+/src
+config/**/private.json
+config/**/private.*.json
 /docs
 /test
 /examples
