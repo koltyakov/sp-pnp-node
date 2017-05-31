@@ -2,12 +2,13 @@ import { expect } from 'chai';
 import * as pnp from 'sp-pnp-js';
 import * as path from 'path';
 import * as sprequest from 'sp-request';
+import { Cpass } from 'cpass';
 
 import { PnpNode, IPnpNodeSettings } from '../../src';
 
 import { TestsConfigs } from '../configs';
 
-const cpass = new (require('cpass'))();
+const cpass = new Cpass();
 
 const testVariables = {
     newListName: 'PnP JS Core Temporary List'

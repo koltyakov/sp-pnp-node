@@ -4,6 +4,7 @@ import * as nodeFetch from 'node-fetch';
 import fetch from 'node-fetch';
 import * as https from 'https';
 import * as path from 'path';
+import { Cpass } from 'cpass';
 
 import { IAuthOptions } from 'node-sp-auth';
 import { AuthConfig as SPAuthConfigirator } from 'node-sp-auth-config';
@@ -35,7 +36,7 @@ export class PnpNode implements HttpClientImpl {
             }
         };
         if (typeof this.settings.authOptions !== 'undefined') {
-            const cpass = new (require('cpass'))();
+            const cpass = new Cpass();
             (this.settings.authOptions as any).password = (this.settings.authOptions as any).password &&
                 cpass.decode((this.settings.authOptions as any).password);
         }

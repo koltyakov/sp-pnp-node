@@ -398,9 +398,9 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cpass@^1.0.2, cpass@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/cpass/-/cpass-1.1.0.tgz#8b5d30ccc8d497925b01b116a44ae2da98708e77"
+cpass@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cpass/-/cpass-2.0.0.tgz#650644572133d737d39e9a4757999b0d54bfb7eb"
   dependencies:
     crypto "0.0.3"
     os "^0.1.1"
@@ -1700,13 +1700,12 @@ node-fetch@^1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-sp-auth-config@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-1.1.1.tgz#059a0d868f291f76022a61e299785daa45d3d43e"
+node-sp-auth-config@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-2.0.0.tgz#b3040d023578f245c2f22fb1912f2fb86b318e23"
   dependencies:
-    bluebird "^3.5.0"
     colors "^1.1.2"
-    cpass "^1.0.2"
+    cpass "^2.0.0"
     inquirer "^3.0.6"
     mkdirp "^0.5.1"
     node-sp-auth "^1.3.3"
