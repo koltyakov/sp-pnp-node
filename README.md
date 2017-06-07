@@ -30,11 +30,10 @@ npm install sp-pnp-node sp-pnp-js --save
 ### Yarn
 
 ```bash
-yarn add sp-pnp-node sp-pnp-js --save
+yarn add sp-pnp-node sp-pnp-js
 ```
 
 ## Usage examples
-
 
 ### Minimal setup
 
