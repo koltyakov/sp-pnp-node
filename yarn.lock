@@ -101,9 +101,9 @@
     "@types/form-data" "*"
     "@types/node" "*"
 
-"@types/sharepoint@^2013.1.2":
-  version "2013.1.6"
-  resolved "https://registry.yarnpkg.com/@types/sharepoint/-/sharepoint-2013.1.6.tgz#b9665b00a4b01f049be0d4b9a496d5092f2de420"
+"@types/sharepoint@^2013.1.7":
+  version "2013.1.7"
+  resolved "https://registry.yarnpkg.com/@types/sharepoint/-/sharepoint-2013.1.7.tgz#a537179733559baefe91462bcf451fca4f84dbed"
   dependencies:
     "@types/microsoft-ajax" "*"
 
@@ -1700,9 +1700,9 @@ node-fetch@^1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-sp-auth-config@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-2.0.0.tgz#b3040d023578f245c2f22fb1912f2fb86b318e23"
+node-sp-auth-config@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/node-sp-auth-config/-/node-sp-auth-config-2.0.1.tgz#6e5cde6bbe14a21a9d0d0c8ac04210c3bc409ff2"
   dependencies:
     colors "^1.1.2"
     cpass "^2.0.0"
@@ -2226,11 +2226,11 @@ source-map@^0.1.38:
   dependencies:
     amdefine ">=0.0.4"
 
-sp-pnp-js@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/sp-pnp-js/-/sp-pnp-js-2.0.5.tgz#84231677be45cb6b45bc99fbaa109fb0e1df6970"
+sp-pnp-js@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/sp-pnp-js/-/sp-pnp-js-2.0.6.tgz#cd6783931df4813e44199a70f476e7a6240da12a"
   dependencies:
-    "@types/sharepoint" "^2013.1.2"
+    "@types/sharepoint" "^2013.1.7"
 
 sp-request@^2.0.3:
   version "2.0.3"
