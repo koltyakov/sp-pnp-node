@@ -5,4 +5,5 @@ export interface IPnpNodeSettings {
     siteUrl?: string;
     authOptions?: IAuthOptions;
     config?: IAuthConfigSettings;
+    envCode?: 'spo' | '15' | '16';
 }
