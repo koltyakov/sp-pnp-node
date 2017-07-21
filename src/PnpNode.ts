@@ -33,7 +33,8 @@ export class PnpNode implements HttpClientImpl {
                 configPath: path.resolve(config.configPath || path.join(process.cwd(), 'config/private.json')),
                 encryptPassword: typeof config.encryptPassword !== 'undefined' ? config.encryptPassword : true,
                 saveConfigOnDisk: typeof config.saveConfigOnDisk !== 'undefined' ? config.saveConfigOnDisk : true
-            }
+            },
+            envCode: settings.envCode || '15'
         };
         if (typeof this.settings.authOptions !== 'undefined') {
             const cpass = new Cpass();
@@ -71,8 +72,7 @@ export class PnpNode implements HttpClientImpl {
                 };
 
                 // On-Prem 2013 issue with `accept: application/json`
-                // On-Prem 2016 is sacrificed to be treaten as 2013 for now
-                if (this.utils.isOnPrem(url)) {
+                if (this.utils.isOnPrem(url) && this.settings.envCode === '15') {
                     const disallowed = [ 'application/json' ];
                     if (disallowed.indexOf(fetchOptions.headers.get('accept')) !== -1) {
                         fetchOptions.headers.set('accept', 'application/json;odata=verbose');
