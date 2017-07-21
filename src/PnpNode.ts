@@ -98,7 +98,7 @@ export class PnpNode implements HttpClientImpl {
                     .then((context) => {
                         this.settings = {
                             ...this.settings,
-                            ...context
+                            ...<any>context
                         };
                         resolve(this.settings);
                     })
