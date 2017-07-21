@@ -22,6 +22,7 @@ export class PnpNode implements HttpClientImpl {
 
     private settings: IPnpNodeSettings;
     private spAuthConfigirator: SPAuthConfigirator;
+    private agent: https.Agent;
     private utils: Utils;
 
     constructor(settings: IPnpNodeSettings = {}) {
@@ -43,6 +44,11 @@ export class PnpNode implements HttpClientImpl {
         }
         this.utils = new Utils();
         this.spAuthConfigirator = new SPAuthConfigirator(this.settings.config);
+        this.agent = new https.Agent({
+            rejectUnauthorized: false,
+            keepAlive: true,
+            keepAliveMsecs: 10000
+        });
     }
 
     public fetch = (url: string, options: FetchOptions): Promise<any> => {
@@ -81,7 +87,7 @@ export class PnpNode implements HttpClientImpl {
 
                 if (this.utils.isUrlHttps(url) && !fetchOptions.agent) {
                     // Bypassing ssl certificate errors (self signed, etc) for on-premise
-                    fetchOptions.agent = new https.Agent({ rejectUnauthorized: false });
+                    fetchOptions.agent = this.agent;
                 }
 
                 // Return actual request promise
