@@ -26,11 +26,10 @@
   },
   "homepage": "https://github.com/koltyakov/sp-pnp-node#readme",
   "dependencies": {
-    "https": "^1.0.0",
     "node-fetch": "^1.6.3",
     "node-sp-auth": "^1.3.3",
     "node-sp-auth-config": "^2.0.1",
-    "sp-pnp-js": "^2.0.6"
+    "sp-pnp-js": "^2.0.7"
   },
   "devDependencies": {
     "@types/chai": "^3.5.2",
