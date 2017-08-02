@@ -48,7 +48,7 @@
     "gulp-typescript": "^3.1.6",
     "merge-stream": "^1.0.1",
     "mocha": "^3.4.2",
-    "sp-request": "^2.0.3",
+    "sp-request": "^2.0.4",
     "ts-node": "^3.0.4",
     "tslint": "^5.2.0",
     "typescript": "^2.3.2",
