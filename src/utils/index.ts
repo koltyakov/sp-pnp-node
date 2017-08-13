@@ -3,7 +3,7 @@ import { Headers, Request } from 'node-fetch';
 export class Utils {
 
     public checkNestedProperties(object: any, ...args: string[]): boolean {
-        for (let i: number = 0, len: number = args.length; i < len; i += 1) {
+        for (let i = 0, len: number = args.length; i < len; i += 1) {
             if (!object || !object.hasOwnProperty(args[i])) {
                 return false;
             }
