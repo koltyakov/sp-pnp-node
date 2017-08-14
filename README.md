@@ -5,6 +5,10 @@
 [![npm version](https://badge.fury.io/js/sp-pnp-node.svg)](https://badge.fury.io/js/sp-pnp-node)
 [![Downloads](https://img.shields.io/npm/dm/sp-pnp-node.svg)](https://www.npmjs.com/package/sp-pnp-node)
 
+---
+### Need help on SharePoint with Node.js? Join our gitter chat and ask question! [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/sharepoint-node/Lobby)
+---
+
 `sp-pnp-node` provides a simple way for using [`pnp-js-core`](https://github.com/SharePoint/PnP-JS-Core) without a browser context right in Node.js, in other words, on server side.
 
 `sp-pnp-node` patches global variables and fetch client so `pnp-js-core` used to behave as if it were in it's usual environment.
