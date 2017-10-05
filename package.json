@@ -1,7 +1,7 @@
 {
   "name": "sp-pnp-node",
   "description": "SharePoint JavaScript Core Library (PnP JS Core) wrapper helper for Node.js",
-  "version": "0.2.6",
+  "version": "1.0.0",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
@@ -27,10 +27,10 @@
   },
   "homepage": "https://github.com/koltyakov/sp-pnp-node#readme",
   "dependencies": {
-    "node-fetch": "^1.7.2",
-    "node-sp-auth": "^2.1.1",
-    "node-sp-auth-config": "^2.0.2",
-    "sp-pnp-js": "^2.0.7"
+    "node-fetch": "^1.7.3",
+    "node-sp-auth": "^2.2.3",
+    "node-sp-auth-config": "^2.0.5",
+    "sp-pnp-js": "<3.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.2",
