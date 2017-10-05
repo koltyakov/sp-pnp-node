@@ -12,10 +12,10 @@
 
 ---
 
-New in ver. 2.0.0
+New in ver. [2.0.0](https://github.com/koltyakov/sp-pnp-node)
 - Added support for `sp-pnp-js` ver. 3.0.*
 
-New in ver. 1.0.0
+New in ver. [1.0.0](https://github.com/koltyakov/sp-pnp-node/tree/pnp-2-x)
 - The version is stuck with `sp-pnp-js` ver. 2.*
 
 ---
