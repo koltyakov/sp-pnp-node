@@ -56,13 +56,6 @@ export class PnpNode implements HttpClientImpl {
             url = this.utils.combineUrl(this.settings.siteUrl, url);
         }
 
-        // if (options.method === 'POST') {
-        //     console.log(
-        //         url, options.method,
-        //         this.utils.anyToHeaders(options.headers).get('x-requestdigest')
-        //     );
-        // }
-
         // Authenticate with node-sp-auth and inject auth headers
         return <any>spauth.getAuth(url, this.settings.authOptions)
             .then((data: any) => {

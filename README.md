@@ -115,11 +115,13 @@ let pnpNodeSettings: IPnpNodeSettings = {
 };
 
 pnp.setup({
-    fetchClientFactory: () => {
-        return new PnpNode(pnpNodeSettings);
-    },
-    // baseUrl - Optional if siteUrl is in IPnpNodeSettings or in case of `new Web(url)`
-    baseUrl: config.siteUrl
+    sp: {
+        fetchClientFactory: () => {
+            return new PnpNode(pnpNodeSettings);
+        },
+        // baseUrl - Optional if siteUrl is in IPnpNodeSettings or in case of `new Web(url)`
+        baseUrl: config.siteUrl
+    }
 });
 
 pnp.sp.web.get()
@@ -177,10 +179,12 @@ import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 (new PnpNode()).initAmbient().then((settings: IPnpNodeSettings) => {
 
     pnpsetup({
-        headers: {
-            // 'Accept': 'application/json;odata=verbose'
-            'Accept': 'application/json;odata=minimalmetadata'
-            // 'Accept': 'application/json;odata=nometadata'
+        sp: {
+            headers: {
+                // 'Accept': 'application/json;odata=verbose'
+                'Accept': 'application/json;odata=minimalmetadata'
+                // 'Accept': 'application/json;odata=nometadata'
+            }
         }
     });
 

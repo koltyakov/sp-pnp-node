@@ -30,8 +30,10 @@ for (let testConfig of TestsConfigs) {
                 authOptions: config
             };
             pnp.setup({
-                fetchClientFactory: () => {
-                    return new PnpNode(pnpNodeSettings);
+                sp: {
+                    fetchClientFactory: () => {
+                        return new PnpNode(pnpNodeSettings);
+                    }
                 }
             });
 
@@ -130,8 +132,10 @@ for (let testConfig of TestsConfigs) {
                 this.timeout(30 * 1000);
 
                 pnp.setup({
-                    headers: {
-                        accept: 'application/json;odata=minimalmetadata'
+                    sp: {
+                        headers: {
+                            accept: 'application/json;odata=minimalmetadata'
+                        }
                     }
                 });
 
@@ -139,7 +143,9 @@ for (let testConfig of TestsConfigs) {
                 web.get()
                     .then(response => {
                         pnp.setup({
-                            headers: undefined
+                            sp: {
+                                headers: undefined
+                            }
                         });
                         expect(response).to.have.property('odata.metadata');
                         expect(response).to.not.have.property('__metadata');
@@ -153,8 +159,10 @@ for (let testConfig of TestsConfigs) {
                 this.timeout(30 * 1000);
 
                 pnp.setup({
-                    headers: {
-                        accept: 'application/json;odata=nometadata'
+                    sp: {
+                        headers: {
+                            accept: 'application/json;odata=nometadata'
+                        }
                     }
                 });
 
@@ -162,7 +170,9 @@ for (let testConfig of TestsConfigs) {
                 web.get()
                     .then(response => {
                         pnp.setup({
-                            headers: undefined
+                            sp: {
+                                headers: undefined
+                            }
                         });
                         expect(response).to.have.property('Id');
                         expect(response).to.not.have.property('odata.metadata');
@@ -241,7 +251,9 @@ for (let testConfig of TestsConfigs) {
             this.timeout(30 * 1000);
 
             pnp.setup({
-                baseUrl: config.siteUrl
+                sp: {
+                    baseUrl: config.siteUrl
+                }
             });
 
             request.get(`${config.siteUrl}/_api/web?$select=Title`)
@@ -255,7 +267,9 @@ for (let testConfig of TestsConfigs) {
                     expect(response[0].Title).to.equal(response[1]);
 
                     pnp.setup({
-                        baseUrl: undefined
+                        sp: {
+                            baseUrl: undefined
+                        }
                     });
 
                     done();
