@@ -5,18 +5,20 @@ const pnpNode = new PnpNode();
 
 pnpNode.initAmbient().then((settings) => {
 
-    let web = new pnp.Web(settings.siteUrl);
+  let web = new pnp.Web(settings.siteUrl);
 
-    pnp.setup({
-        headers: {
-            'Accept': 'application/json;odata=minimalmetadata'
-        }
-    });
+  pnp.setup({
+    sp: {
+      headers: {
+        Accept: 'application/json;odata=minimalmetadata'
+      }
+    }
+  });
 
-    web.get()
-        .then(resp => {
-            console.log(resp);
-        })
-        .catch(console.log);
+  web.get()
+    .then(resp => {
+      console.log(resp);
+    })
+    .catch(console.log);
 
 }).catch(console.log);

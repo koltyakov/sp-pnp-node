@@ -13,9 +13,11 @@
 ---
 
 New in ver. [2.0.0](https://github.com/koltyakov/sp-pnp-node)
+
 - Added support for `sp-pnp-js` ver. 3.0.*
 
 New in ver. [1.0.0](https://github.com/koltyakov/sp-pnp-node/tree/pnp-2-x)
+
 - The version is stuck with `sp-pnp-js` ver. 2.*
 
 ---
@@ -24,7 +26,7 @@ New in ver. [1.0.0](https://github.com/koltyakov/sp-pnp-node/tree/pnp-2-x)
 
 The Patterns and Practices JavaScript Core Library was created to help developers by simplifying common operations within SharePoint and the SharePoint Framework. Currently it contains a fluent API for working with the full SharePoint REST API as well as utility and helper functions. This takes the guess work out of creating REST requests, letting developers focus on the what and less on the how.
 
-## Supported SharePoint versions:
+## Supported SharePoint versions
 
 - SharePoint Online
 - SharePoint 2013
@@ -65,6 +67,7 @@ import { PnpNode } from 'sp-pnp-node';
 ![demo](https://raw.githubusercontent.com/koltyakov/sp-pnp-node/master/docs/demo.gif)
 
 `sp-pnp-node` has two modes:
+
 - ambient - wraps `sp-pnp-js` with promise based auth wizard helper
 - factory - `fetchClientFactory` implementation
 
@@ -76,26 +79,26 @@ import { PnpNode } from 'sp-pnp-node';
 import { Web } from 'sp-pnp-js';
 import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
-let optionalInitSettings: IPnpNodeSettings = { 
-    // ...
+let optionalInitSettings: IPnpNodeSettings = {
+  // ...
 };
 
 (new PnpNode(optionalInitSettings)).initAmbient().then((settings: IPnpNodeSettings) => {
 
-    // Here goes PnP JS Core code >>>
+  // Here goes PnP JS Core code >>>
 
-    let web = new Web(settings.siteUrl);
-    // Any SPWeb url can be used for `new Web(...)`
-    // not necessarily which is provided in `optionalInitSettings`
+  let web = new Web(settings.siteUrl);
+  // Any SPWeb url can be used for `new Web(...)`
+  // not necessarily which is provided in `optionalInitSettings`
 
-    // Get all list example
-    web.lists.get()
-        .then(lists => {
-            console.log(lists.map(list => list.Title));
-        })
-        .catch(console.log);
+  // Get all list example
+  web.lists.get()
+    .then(lists => {
+      console.log(lists.map(list => list.Title));
+    })
+    .catch(console.log);
 
-    // <<< Here goes PnP JS Core code
+  // <<< Here goes PnP JS Core code
 
 }).catch(console.log);
 ```
@@ -109,35 +112,35 @@ import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 let config = require('../config/private.json');
 
 let pnpNodeSettings: IPnpNodeSettings = {
-    // siteUrl - Optional if baseUrl is in pnp.setup or in case of `new Web(url)`
-    siteUrl: config.siteUrl,
-    authOptions: config
+  // siteUrl - Optional if baseUrl is in pnp.setup or in case of `new Web(url)`
+  siteUrl: config.siteUrl,
+  authOptions: config
 };
 
 pnp.setup({
-    sp: {
-        fetchClientFactory: () => {
-            return new PnpNode(pnpNodeSettings);
-        },
-        // baseUrl - Optional if siteUrl is in IPnpNodeSettings or in case of `new Web(url)`
-        baseUrl: config.siteUrl
-    }
+  sp: {
+    fetchClientFactory: () => {
+      return new PnpNode(pnpNodeSettings);
+    },
+    // baseUrl - Optional if siteUrl is in IPnpNodeSettings or in case of `new Web(url)`
+    baseUrl: config.siteUrl
+  }
 });
 
 pnp.sp.web.get()
-    .then(resp => {
-        console.log(resp);
-    })
-    .catch(console.log);
+  .then(resp => {
+    console.log(resp);
+  })
+  .catch(console.log);
 
 // Or
 
 /*
 (new pnp.sp.Web('http://adhoc.url/sites/site')).get()
-    .then(resp => {
-        console.log(resp);
-    })
-    .catch(console.log);
+  .then(resp => {
+    console.log(resp);
+  })
+  .catch(console.log);
 */
 ```
 
@@ -149,23 +152,23 @@ const PnpNode = require('sp-pnp-node').PnpNode;
 
 (new PnpNode()).initAmbient().then(settings => {
 
-    // Here goes PnP JS Core code >>>
+  // Here goes PnP JS Core code >>>
 
-    let web = new pnp.Web(settings.siteUrl);
+  let web = new pnp.Web(settings.siteUrl);
 
-    // Get all content types example
-    web.contentTypes.get()
-        .then(cts => {
-            console.log(cts.map(ct => {
-                return {
-                    name: ct.Name,
-                    description: ct.Description
-                };
-            }));
-        })
-        .catch(console.log);
+  // Get all content types example
+  web.contentTypes.get()
+    .then(cts => {
+      console.log(cts.map(ct => {
+        return {
+          name: ct.Name,
+          description: ct.Description
+        };
+      }));
+    })
+    .catch(console.log);
 
-    // <<< Here goes PnP JS Core code
+  // <<< Here goes PnP JS Core code
 
 }).catch(console.log);
 ```
@@ -178,17 +181,17 @@ import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
 (new PnpNode()).initAmbient().then((settings: IPnpNodeSettings) => {
 
-    pnpsetup({
-        sp: {
-            headers: {
-                // 'Accept': 'application/json;odata=verbose'
-                'Accept': 'application/json;odata=minimalmetadata'
-                // 'Accept': 'application/json;odata=nometadata'
-            }
-        }
-    });
+  pnpsetup({
+    sp: {
+      headers: {
+        // 'Accept': 'application/json;odata=verbose'
+        'Accept': 'application/json;odata=minimalmetadata'
+        // 'Accept': 'application/json;odata=nometadata'
+      }
+    }
+  });
 
-    // ...
+  // ...
 
 }).catch(console.log);
 ```
@@ -199,12 +202,12 @@ import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
 let pnpNodeSettings: IPnpNodeSettings = {
-    /// ...
+  /// ...
 };
 
 (new PnpNode(pnpNodeSettings)).initAmbient().then((settings: IPnpNodeSettings) => {
 
-    // Here goes PnP JS Core code
+  // Here goes PnP JS Core code
 
 }).catch(console.log);
 ```
@@ -218,24 +221,24 @@ declare const global: any;
 
 (new PnpNode()).initAmbient().then((settings) => {
 
-    // Any raw RESP API requests with Fetch client
-    global.fetch(`${settings.siteUrl}/_api/web`, {
-        method: 'GET',
-        headers: {
-            accept: 'application/json;odata=minimalmetadata'
-        }
+  // Any raw RESP API requests with Fetch client
+  global.fetch(`${settings.siteUrl}/_api/web`, {
+    method: 'GET',
+    headers: {
+      accept: 'application/json;odata=minimalmetadata'
+    }
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
     })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-        })
-        .catch(console.log);
+    .catch(console.log);
 
 });
 
 ```
 
-### PnP Node Settings options:
+### PnP Node Settings options
 
 - siteUrl?: string; // Optional SPWeb url
 - authOptions?: IAuthOptions; `node-sp-auth` [credentials options](https://github.com/s-KaiNet/node-sp-auth)
