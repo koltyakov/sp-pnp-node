@@ -1,4 +1,4 @@
-# sp-pnp-node - SharePoint typescript Core Library (PnP JS Core) wrapper helper for Node.js
+# sp-pnp-node - PnPjs's auth client factory for Node.js
 
 [![NPM](https://nodei.co/npm/sp-pnp-node.png?mini=true&downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/sp-pnp-node/)
 
@@ -6,33 +6,20 @@
 [![Downloads](https://img.shields.io/npm/dm/sp-pnp-node.svg)](https://www.npmjs.com/package/sp-pnp-node)
 ![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)
 
-`sp-pnp-node` provides a simple way for using [`PnPjs`](https://github.com/pnp/pnpjs) without a browser context right in Node.js, in other words, on server side.
+`sp-pnp-node` provides a simple way for using [`PnPjs`](https://github.com/pnp/pnpjs) in Node.js with support of various authentication strategies.
 
-`sp-pnp-node` patches global variables and fetch client so `PnPjs` used to behave as if it were in it's usual environment.
+## About PnPjs
 
----
-
-New in ver. [2.0.0](https://github.com/koltyakov/sp-pnp-node)
-
-- Added support for `sp-pnp-js` ver. 3.0.*
-
-New in ver. [1.0.0](https://github.com/koltyakov/sp-pnp-node/tree/pnp-2-x)
-
-- The version is stuck with `sp-pnp-js` ver. 2.*
-
----
-
-## About: typescript Core Library
-
-The Patterns and Practices typescript Core Library was created to help developers by simplifying common operations within SharePoint and the SharePoint Framework. Currently it contains a fluent API for working with the full SharePoint REST API as well as utility and helper functions. This takes the guess work out of creating REST requests, letting developers focus on the what and less on the how.
+PnPjs Client Side Libraries for Microsoft 365 was created to help developers by simplifying common operations within SharePoint and the SharePoint Framework. Currently it contains a fluent API for working with the full SharePoint REST API as well as utility and helper functions. This takes the guess work out of creating REST requests, letting developers focus on the what and less on the how.
 
 ## Supported SharePoint versions
 
 - SharePoint Online
 - SharePoint 2013
 - SharePoint 2016
+- SharePoint 2019
 
-## Get started
+## Install
 
 ### NPM
 
@@ -56,7 +43,7 @@ Can be as simple as 5 lines of code:
 import { Web } from '@pnp/sp';
 import { PnpNode } from 'sp-pnp-node';
 
-new PnpNode().initAmbient().then((settings) => {
+new PnpNode().init().then(settings => {
 
   const web = new Web(settings.siteUrl);
   /// ... // <<< Here goes PnP JS Core code
@@ -68,12 +55,16 @@ new PnpNode().initAmbient().then((settings) => {
 
 `sp-pnp-node` has two modes:
 
-- ambient - wraps `PnPjs` with promise based auth wizard helper
+- ambient init - wraps `PnPjs` with promise based auth wizard helper
 - factory - `fetchClientFactory` implementation
+
+_When to use ambient init_: in scripts with user interaction involved when there is no information about authentication and target invironment before script is executed. SharePoint url and the creds are prompted in a console.
+
+In CI/CD scenarios, factory approach is recommended over interactive console as it can lead to a task stuck.
 
 ### TypeScript
 
-#### Ambient example
+#### Ambient init example
 
 ```typescript
 import { Web } from '@pnp/sp';
@@ -83,7 +74,7 @@ const optionalInitSettings: IPnpNodeSettings = {
   // ...
 };
 
-(new PnpNode(optionalInitSettings)).initAmbient().then((settings: IPnpNodeSettings) => {
+new PnpNode(optionalInitSettings).init().then((settings: IPnpNodeSettings) => {
 
   // Here goes PnP JS Core code >>>
 
@@ -126,33 +117,29 @@ pnp.sp.setup({
 });
 
 pnp.sp.web.get()
-  .then(resp => {
-    console.log(resp);
-  })
+  .then(console.log)
   .catch(console.log);
 
 // Or
 
 /*
-(new pnp.sp.Web('http://adhoc.url/sites/site')).get()
-  .then(resp => {
-    console.log(resp);
-  })
+new Web('http://adhoc.url/sites/site').get()
+  .then(console.log)
   .catch(console.log);
 */
 ```
 
-### typescript
+### JavaScript
 
-```typescript
-const pnp = require('@pnp/sp');
-const PnpNode = require('sp-pnp-node').PnpNode;
+```javascript
+const { Web } = require('@pnp/sp');
+const { PnpNode } = require('sp-pnp-node');
 
 new PnpNode().init().then(settings => {
 
   // Here goes PnP JS Core code >>>
 
-  const web = new pnp.Web(settings.siteUrl);
+  const web = new Web(settings.siteUrl);
 
   // Get all content types example
   web.contentTypes.get()
@@ -174,7 +161,7 @@ new PnpNode().init().then(settings => {
 ### OData Metadata modes
 
 ```typescript
-import { Web, sp } from '@pnp/sp';
+import { sp } from '@pnp/sp';
 import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
 
 new PnpNode().init().then((settings: IPnpNodeSettings) => {
@@ -197,13 +184,13 @@ new PnpNode().init().then((settings: IPnpNodeSettings) => {
 ## Initiation settings
 
 ```typescript
-import { PnpNode, IPnpNodeSettings } from 'sp-pnp-node';
+import { PnpNode } from 'sp-pnp-node';
 
 const pnpNodeSettings: IPnpNodeSettings = {
   /// ...
 };
 
-new PnpNode(pnpNodeSettings).init().then((settings: IPnpNodeSettings) => {
+new PnpNode(pnpNodeSettings).init().then(settings => {
 
   // Here goes PnP JS Core code
 
@@ -217,7 +204,7 @@ import { PnpNode } from 'sp-pnp-node';
 
 declare const global: any;
 
-new PnpNode().init().then((settings) => {
+new PnpNode().init().then(settings => {
 
   // Any raw RESP API requests with Fetch client
   global.fetch(`${settings.siteUrl}/_api/web`, {
