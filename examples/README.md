@@ -8,7 +8,7 @@ PnP JS Core in Node.js with help of sp-pnp-node:
 
 Examples project is located over the [link](https://github.com/koltyakov/sp-pnp-node-demo).
 
-### Demos embrase:
+### Scenarios
 
 #### 01-Basics
 

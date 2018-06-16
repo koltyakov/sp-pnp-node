@@ -3,9 +3,9 @@ const PnpNode = require('../dist').PnpNode;
 
 const pnpNode = new PnpNode();
 
-pnpNode.initAmbient().then((settings) => {
+pnpNode.init().then((settings) => {
 
-  let web = new pnp.Web(settings.siteUrl);
+  const web = new pnp.Web(settings.siteUrl);
 
   pnp.setup({
     sp: {
@@ -15,10 +15,6 @@ pnpNode.initAmbient().then((settings) => {
     }
   });
 
-  web.get()
-    .then(resp => {
-      console.log(resp);
-    })
-    .catch(console.log);
+  return web.get().then(console.log);
 
 }).catch(console.log);

@@ -1,17 +1,17 @@
-import { Web, setup as pnpsetup } from 'sp-pnp-js';
+import { Web, sp } from '@pnp/sp';
 import { PnpNode, IPnpNodeSettings } from '../src';
 
-let pnpNodeSettings: IPnpNodeSettings = {
+const pnpNodeSettings: IPnpNodeSettings = {
   // ...
 };
 
 const pnpNode = new PnpNode(pnpNodeSettings);
 
-pnpNode.initAmbient().then((settings: IPnpNodeSettings) => {
+pnpNode.init().then((settings: IPnpNodeSettings) => {
 
-  let web: Web = new Web(settings.siteUrl);
+  const web: Web = new Web(settings.siteUrl);
 
-  pnpsetup({
+  sp.setup({
     sp: {
       headers: {
         'Accept': 'application/json;odata=nometadata'
@@ -19,10 +19,6 @@ pnpNode.initAmbient().then((settings: IPnpNodeSettings) => {
     }
   });
 
-  web.get()
-    .then(resp => {
-      console.log(resp);
-    })
-    .catch(console.log);
+  return web.get().then(console.log);
 
 }).catch(console.log);

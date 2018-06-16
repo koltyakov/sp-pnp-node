@@ -1,4 +1,4 @@
-import * as pnp from 'sp-pnp-js';
+import { sp } from '@pnp/sp';
 import { PnpNode, IPnpNodeSettings } from '../src';
 
 let config = require('../config/private.json');
@@ -8,7 +8,7 @@ let pnpNodeSettings: IPnpNodeSettings = {
   authOptions: config
 };
 
-pnp.setup({
+sp.setup({
   sp: {
     fetchClientFactory: () => {
       return new PnpNode(pnpNodeSettings);
@@ -17,8 +17,6 @@ pnp.setup({
   }
 });
 
-pnp.sp.web.get()
-  .then(resp => {
-    console.log(resp);
-  })
+sp.web.get()
+  .then(console.log)
   .catch(console.log);

@@ -1,4 +1,4 @@
-import { HttpClientImpl, FetchOptions } from 'sp-pnp-js';
+import { HttpClientImpl, FetchOptions } from '@pnp/common';
 import * as spauth from 'node-sp-auth';
 import * as nodeFetch from 'node-fetch';
 // tslint:disable-next-line:no-duplicate-imports
@@ -6,9 +6,6 @@ import fetch from 'node-fetch';
 import * as https from 'https';
 import * as path from 'path';
 import { Cpass } from 'cpass';
-
-// tslint:disable-next-line:no-duplicate-imports
-import { IAuthOptions } from 'node-sp-auth';
 import { AuthConfig as SPAuthConfigirator } from 'node-sp-auth-config';
 
 import { Utils } from './utils';
@@ -28,7 +25,7 @@ export class PnpNode implements HttpClientImpl {
   private utils: Utils;
 
   constructor (settings: IPnpNodeSettings = {}) {
-    let config = settings.config || {};
+    const config = settings.config || {};
     this.settings = {
       ...settings,
       config: {
@@ -51,6 +48,7 @@ export class PnpNode implements HttpClientImpl {
       keepAlive: true,
       keepAliveMsecs: 10000
     });
+    global.fetch = this.fetch;
   }
 
   public fetch = (url: string, options: FetchOptions): Promise<any> => {
@@ -61,9 +59,8 @@ export class PnpNode implements HttpClientImpl {
     // Authenticate with node-sp-auth and inject auth headers
     return spauth.getAuth(url, this.settings.authOptions)
       .then((data: any) => {
-
         // Merge options and headers
-        let fetchOptions: any = {
+        const fetchOptions: any = {
           ...options,
           ...data.options,
           headers: this.utils.mergeHeaders({
@@ -90,9 +87,7 @@ export class PnpNode implements HttpClientImpl {
       }) as any;
   }
 
-  public init = (): Promise<IPnpNodeSettings> => { return this.initAmbient(); }; // Alias
-  public initAmbient = (): Promise<IPnpNodeSettings> => {
-    global.fetch = this.fetch;
+  public init = (): Promise<IPnpNodeSettings> => {
     return new Promise((resolve, reject) => {
       if (typeof this.settings.authOptions === 'undefined') {
         this.spAuthConfigirator.getContext()

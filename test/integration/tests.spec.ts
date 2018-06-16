@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import * as pnp from 'sp-pnp-js';
+import { sp, Web } from '@pnp/sp';
 import * as path from 'path';
 import * as sprequest from 'sp-request';
 import { Cpass } from 'cpass';
@@ -29,11 +29,9 @@ for (let testConfig of TestsConfigs) {
         siteUrl: config.siteUrl,
         authOptions: config
       };
-      pnp.setup({
+      sp.setup({
         sp: {
-          fetchClientFactory: () => {
-            return new PnpNode(pnpNodeSettings);
-          }
+          fetchClientFactory: () => new PnpNode(pnpNodeSettings)
         }
       });
 
@@ -51,7 +49,7 @@ for (let testConfig of TestsConfigs) {
       request.get(`${config.siteUrl}/_api/web?$select=Title`)
         .then(response => {
           return Promise.all([
-            pnp.sp.web.select('Title').get(),
+            sp.web.select('Title').get(),
             response.body.d.Title
           ]);
         })
@@ -68,7 +66,7 @@ for (let testConfig of TestsConfigs) {
       request.get(`${config.siteUrl}/_api/web/lists?$select=Title`)
         .then(response => {
           return Promise.all([
-            pnp.sp.web.lists.select('Title').get(),
+            sp.web.lists.select('Title').get(),
             response.body.d.results
           ]);
         })
@@ -82,10 +80,10 @@ for (let testConfig of TestsConfigs) {
     it('should create a new list', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      let web = new pnp.Web(config.siteUrl);
+      let web = new Web(config.siteUrl);
       web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
-        .then(response => {
-          return pnp.sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
+        .then(_ => {
+          return sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
         })
         .then(response => {
           expect(response.Title).to.equal(testVariables.newListName);
@@ -97,14 +95,13 @@ for (let testConfig of TestsConfigs) {
     it('should create list item', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      let web = new pnp.Web(config.siteUrl);
+      let web = new Web(config.siteUrl);
       let list = web.lists.getByTitle(testVariables.newListName);
       list.items.add({ Title: 'New item' })
-        .then(response => {
+        .then(_ => {
           return list.items.select('Title').get();
         })
-        .then(response => {
-          // expect(response.length).to.equal(1);
+        .then(_ => {
           done();
         })
         .catch(done);
@@ -113,13 +110,13 @@ for (let testConfig of TestsConfigs) {
     it('should delete list item', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      let web = new pnp.Web(config.siteUrl);
+      let web = new Web(config.siteUrl);
       let list = web.lists.getByTitle(testVariables.newListName);
       list.items.select('Id').top(1).get()
         .then(response => {
           return list.items.getById(response[0].Id).delete();
         })
-        .then(response => {
+        .then(_ => {
           done();
         })
         .catch(done);
@@ -131,7 +128,7 @@ for (let testConfig of TestsConfigs) {
       it(`should fetch minimalmetadata`, function (done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        pnp.setup({
+        sp.setup({
           sp: {
             headers: {
               accept: 'application/json;odata=minimalmetadata'
@@ -139,10 +136,10 @@ for (let testConfig of TestsConfigs) {
           }
         });
 
-        let web = new pnp.Web(config.siteUrl);
+        let web = new Web(config.siteUrl);
         web.get()
           .then(response => {
-            pnp.setup({
+            sp.setup({
               sp: {
                 headers: undefined
               }
@@ -158,7 +155,7 @@ for (let testConfig of TestsConfigs) {
       it(`should fetch nometadata`, function (done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        pnp.setup({
+        sp.setup({
           sp: {
             headers: {
               accept: 'application/json;odata=nometadata'
@@ -166,10 +163,10 @@ for (let testConfig of TestsConfigs) {
           }
         });
 
-        let web = new pnp.Web(config.siteUrl);
+        let web = new Web(config.siteUrl);
         web.get()
           .then(response => {
-            pnp.setup({
+            sp.setup({
               sp: {
                 headers: undefined
               }
@@ -189,7 +186,7 @@ for (let testConfig of TestsConfigs) {
         let dragons = ['Jineoss', 'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
           'Berget', 'Lord', 'Podocrurth', 'Jiembyntet', 'Rilrayrarth'];
 
-        let web = new pnp.Web(config.siteUrl);
+        let web = new Web(config.siteUrl);
         let list = web.lists.getByTitle(testVariables.newListName);
 
         let batch = web.createBatch();
@@ -208,7 +205,7 @@ for (let testConfig of TestsConfigs) {
       it('should delete list items in batch', function (done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        let web = new pnp.Web(config.siteUrl);
+        let web = new Web(config.siteUrl);
         let list = web.lists.getByTitle(testVariables.newListName);
 
         list.items.select('Id').get()
@@ -221,7 +218,7 @@ for (let testConfig of TestsConfigs) {
 
             return batch.execute();
           })
-          .then(response => {
+          .then(_ => {
             done();
           })
           .catch(done);
@@ -235,9 +232,9 @@ for (let testConfig of TestsConfigs) {
     it('should create a new list', function(done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        pnp.sp.web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
+        sp.web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
             .then(response => {
-                return pnp.sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
+                return sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
             })
             .then(response => {
                 expect(response.Title).to.equal(testVariables.newListName);
@@ -250,7 +247,7 @@ for (let testConfig of TestsConfigs) {
     it('should correctly consume baseUrl setting', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      pnp.setup({
+      sp.setup({
         sp: {
           baseUrl: config.siteUrl
         }
@@ -259,14 +256,14 @@ for (let testConfig of TestsConfigs) {
       request.get(`${config.siteUrl}/_api/web?$select=Title`)
         .then(response => {
           return Promise.all([
-            pnp.sp.web.select('Title').get(),
+            sp.web.select('Title').get(),
             response.body.d.Title
           ]);
         })
         .then(response => {
           expect(response[0].Title).to.equal(response[1]);
 
-          pnp.setup({
+          sp.setup({
             sp: {
               baseUrl: undefined
             }
@@ -285,7 +282,7 @@ for (let testConfig of TestsConfigs) {
         .then(response => {
           digest = response;
           return request.get(`${config.siteUrl}/_api/web/lists/getByTitle('${testVariables.newListName}')`)
-            .then(res => {
+            .then(_ => {
               return 'can delete';
             })
             .catch(ex => {
