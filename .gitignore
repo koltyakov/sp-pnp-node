@@ -1,7 +1,3 @@
-node_modules
-bower_components
-config/**/private.json
-config/**/private.*.json
-debug.log
-npm-debug.*
-dist
+node_modules/
+config/**/private.*
+dist/

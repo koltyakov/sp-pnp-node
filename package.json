@@ -1,11 +1,11 @@
 {
   "name": "sp-pnp-node",
   "description": "SharePoint JavaScript Core Library (PnP JS Core) wrapper helper for Node.js",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "./dist/index.js",
   "typings": "./dist/index",
   "scripts": {
-    "build": "rimraf ./dist && gulp tsc",
+    "build": "rm -rf ./dist && tsc -p .",
     "test": "ts-node ./test/init && mocha --opts test/mocha.opts || ECHO."
   },
   "keywords": [
@@ -30,36 +30,25 @@
   },
   "dependencies": {
     "node-fetch": "^2.1.2",
-    "node-sp-auth-config": "^2.4.5"
+    "node-sp-auth-config": "^2.5.2"
   },
   "devDependencies": {
-    "@pnp/common": "^1.1.1",
-    "@pnp/logging": "^1.1.1",
-    "@pnp/odata": "^1.1.1",
-    "@pnp/sp": "^1.1.1",
+    "@pnp/pnpjs": "^1.1.1",
     "@types/chai": "^4.1.4",
     "@types/colors": "^1.2.1",
     "@types/core-js": "^2.5.0",
-    "@types/mocha": "^5.2.2",
-    "@types/node": "^10.3.3",
+    "@types/mocha": "^5.2.3",
+    "@types/node": "^10.3.6",
     "@types/node-fetch": "^2.1.1",
     "@types/request": "2.47.1",
     "chai": "^4.1.2",
     "colors": "^1.3.0",
     "cpass": "^2.0.3",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-tslint": "^8.1.3",
-    "gulp-typescript": "^5.0.0-alpha.1",
-    "merge-stream": "^1.0.1",
     "mocha": "^5.2.0",
-    "rimraf": "^2.6.2",
     "sp-request": "^2.1.3",
-    "ts-node": "^6.1.1",
+    "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
-    "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.9.2",
-    "yargs": "^11.0.0"
+    "tslint-config-standard": "^7.1.0",
+    "typescript": "^2.9.2"
   }
 }
