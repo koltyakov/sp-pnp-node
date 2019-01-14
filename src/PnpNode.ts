@@ -43,7 +43,7 @@ export class PnpNode implements HttpClientImpl {
     }
     this.utils = new Utils();
     this.spAuthConfigirator = new SPAuthConfigirator(this.settings.config);
-    this.agent = new https.Agent({
+    this.agent = new https.Agent(settings.httpsAgentOptions || {
       rejectUnauthorized: false,
       keepAlive: true,
       keepAliveMsecs: 10000
@@ -53,7 +53,11 @@ export class PnpNode implements HttpClientImpl {
 
   public fetch = (url: string, options: FetchOptions): Promise<any> => {
     if (!this.utils.isUrlAbsolute(url)) {
-      url = this.utils.combineUrl(this.settings.siteUrl, url);
+      if (this.settings.siteUrl) {
+        url = this.utils.combineUrl(this.settings.siteUrl, url);
+      } else {
+        throw new Error('siteUrl is not defined.');
+      }
     }
 
     // Authenticate with node-sp-auth and inject auth headers
