@@ -98,7 +98,7 @@ for (let testConfig of TestsConfigs) {
     });
 
     it('should create list item', function (done: MochaDone): void {
-      this.timeout(30 * 1000);const
+      this.timeout(30 * 1000);
 
       const web = new Web(config.siteUrl);
       const list = web.lists.getByTitle(testVariables.newListName);
