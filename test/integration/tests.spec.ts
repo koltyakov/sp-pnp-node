@@ -25,9 +25,14 @@ for (let testConfig of TestsConfigs) {
       this.timeout(30 * 1000);
 
       config = require(path.resolve(testConfig.configPath));
-      let pnpNodeSettings: IPnpNodeSettings = {
+      const pnpNodeSettings: IPnpNodeSettings = {
         siteUrl: config.siteUrl,
-        authOptions: config
+        authOptions: config,
+        httpsAgentOptions: {
+          rejectUnauthorized: false,
+          keepAlive: true,
+          keepAliveMsecs: 10000
+        }
       };
       sp.setup({
         sp: {
@@ -80,7 +85,7 @@ for (let testConfig of TestsConfigs) {
     it('should create a new list', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      let web = new Web(config.siteUrl);
+      const web = new Web(config.siteUrl);
       web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
         .then(_ => {
           return sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
@@ -93,10 +98,10 @@ for (let testConfig of TestsConfigs) {
     });
 
     it('should create list item', function (done: MochaDone): void {
-      this.timeout(30 * 1000);
+      this.timeout(30 * 1000);const
 
-      let web = new Web(config.siteUrl);
-      let list = web.lists.getByTitle(testVariables.newListName);
+      const web = new Web(config.siteUrl);
+      const list = web.lists.getByTitle(testVariables.newListName);
       list.items.add({ Title: 'New item' })
         .then(_ => {
           return list.items.select('Title').get();
@@ -110,8 +115,8 @@ for (let testConfig of TestsConfigs) {
     it('should delete list item', function (done: MochaDone): void {
       this.timeout(30 * 1000);
 
-      let web = new Web(config.siteUrl);
-      let list = web.lists.getByTitle(testVariables.newListName);
+      const web = new Web(config.siteUrl);
+      const list = web.lists.getByTitle(testVariables.newListName);
       list.items.select('Id').top(1).get()
         .then(response => {
           return list.items.getById(response[0].Id).delete();
@@ -136,7 +141,7 @@ for (let testConfig of TestsConfigs) {
           }
         });
 
-        let web = new Web(config.siteUrl);
+        const web = new Web(config.siteUrl);
         web.get()
           .then(response => {
             sp.setup({
@@ -163,7 +168,7 @@ for (let testConfig of TestsConfigs) {
           }
         });
 
-        let web = new Web(config.siteUrl);
+        const web = new Web(config.siteUrl);
         web.get()
           .then(response => {
             sp.setup({
@@ -183,13 +188,13 @@ for (let testConfig of TestsConfigs) {
       it('should create list items in batch', function (done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        let dragons = ['Jineoss', 'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
+        const dragons = ['Jineoss', 'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
           'Berget', 'Lord', 'Podocrurth', 'Jiembyntet', 'Rilrayrarth'];
 
-        let web = new Web(config.siteUrl);
-        let list = web.lists.getByTitle(testVariables.newListName);
+        const web = new Web(config.siteUrl);
+        const list = web.lists.getByTitle(testVariables.newListName);
 
-        let batch = web.createBatch();
+        const batch = web.createBatch();
 
         dragons.forEach(dragon => {
           list.items.inBatch(batch).add({ Title: dragon });
@@ -205,8 +210,8 @@ for (let testConfig of TestsConfigs) {
       it('should delete list items in batch', function (done: MochaDone): void {
         this.timeout(30 * 1000);
 
-        let web = new Web(config.siteUrl);
-        let list = web.lists.getByTitle(testVariables.newListName);
+        const web = new Web(config.siteUrl);
+        const list = web.lists.getByTitle(testVariables.newListName);
 
         list.items.select('Id').get()
           .then(response => {
