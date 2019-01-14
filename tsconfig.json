@@ -10,6 +10,7 @@
     "removeComments": true,
     "newLine": "LF",
     "skipLibCheck": true,
+    "strictNullChecks": true,
     "types": ["node", "sharepoint", "mocha"],
     "outDir": "dist"
   },
