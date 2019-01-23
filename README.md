@@ -6,6 +6,8 @@
 [![Downloads](https://img.shields.io/npm/dm/sp-pnp-node.svg)](https://www.npmjs.com/package/sp-pnp-node)
 ![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)
 
+> Consider using [pnp-auth](https://github.com/SharePoint-NodeJS/pnp-auth) as a successor which soaked the best of `sp-pnp-node` and `node-pnp-sp` libraries. I'm keeping `sp-pnp-node` not archived and update it from time to time only because of some production implementations which I'm too lazy to migrate to `pnp-auth` right away.
+
 `sp-pnp-node` provides a simple way for using [`PnPjs`](https://github.com/pnp/pnpjs) in Node.js with support of various authentication strategies.
 
 ## About PnPjs
