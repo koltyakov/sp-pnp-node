@@ -5,6 +5,9 @@ let config = require('../config/private.json');
 
 let pnpNodeSettings: IPnpNodeSettings = {
   siteUrl: config.siteUrl, // Optional if baseUrl is in pnp.setup or in case of `new Web(url)`
+  config: {
+    headlessMode: true
+  },
   authOptions: config
 };
 
