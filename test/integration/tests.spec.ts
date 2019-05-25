@@ -1,12 +1,14 @@
+import * as mocha from 'mocha';
 import { expect } from 'chai';
 import { sp, Web } from '@pnp/sp';
-import * as path from 'path';
 import * as sprequest from 'sp-request';
 import { Cpass } from 'cpass';
+import { IAuthContext } from 'node-sp-auth-config';
 
 import { PnpNode, IPnpNodeSettings } from '../../src';
 
-import { TestsConfigs } from '../configs';
+import { Environments } from '../configs';
+import { getAuthCtx } from './misc';
 
 const cpass = new Cpass();
 
@@ -14,41 +16,46 @@ const testVariables = {
   newListName: 'PnP JS Core Temporary List'
 };
 
-for (let testConfig of TestsConfigs) {
+for (const testConfig of Environments) {
 
   describe(`Run tests in ${testConfig.environmentName}`, () => {
 
     let request: sprequest.ISPRequest;
-    let config: any;
+    let config: IAuthContext;
 
-    before('Configure PnP for Node.js', function (done: any): void {
+    before('Configure PnP for Node.js', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
-      config = require(path.resolve(testConfig.configPath));
-      const pnpNodeSettings: IPnpNodeSettings = {
-        siteUrl: config.siteUrl,
-        authOptions: config,
-        httpsAgentOptions: {
-          rejectUnauthorized: false,
-          keepAlive: true,
-          keepAliveMsecs: 10000
-        }
-      };
-      sp.setup({
-        sp: {
-          fetchClientFactory: () => new PnpNode(pnpNodeSettings)
-        }
-      });
+      getAuthCtx(testConfig)
+        .then((ctx) => {
+          config = ctx;
 
-      request = sprequest.create({
-        ...config,
-        password: config.password && cpass.decode(config.password)
-      });
+          const pnpNodeSettings: IPnpNodeSettings = {
+            ...config,
+            httpsAgentOptions: {
+              rejectUnauthorized: false,
+              keepAlive: true,
+              keepAliveMsecs: 10000
+            }
+          };
 
-      done();
+          const fetchClient = new PnpNode(pnpNodeSettings);
+          sp.setup({
+            sp: {
+              fetchClientFactory: () => fetchClient
+              // baseUrl: config.siteUrl
+            }
+          });
+
+          const password = (config.authOptions as any).password && cpass.decode((config.authOptions as any).password);
+          request = sprequest.create({ ...config.authOptions, password });
+
+          done();
+        })
+        .catch(done);
     });
 
-    it(`should get web's title`, function (done: MochaDone): void {
+    it(`should get web's title`, function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       request.get(`${config.siteUrl}/_api/web?$select=Title`)
@@ -65,7 +72,7 @@ for (let testConfig of TestsConfigs) {
         .catch(done);
     });
 
-    it(`should get lists on web`, function (done: MochaDone): void {
+    it(`should get lists on web`, function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       request.get(`${config.siteUrl}/_api/web/lists?$select=Title`)
@@ -82,7 +89,7 @@ for (let testConfig of TestsConfigs) {
         .catch(done);
     });
 
-    it('should create a new list', function (done: MochaDone): void {
+    it('should create a new list', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       const web = new Web(config.siteUrl);
@@ -97,7 +104,7 @@ for (let testConfig of TestsConfigs) {
         .catch(done);
     });
 
-    it('should create list item', function (done: MochaDone): void {
+    it('should create list item', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       const web = new Web(config.siteUrl);
@@ -112,7 +119,7 @@ for (let testConfig of TestsConfigs) {
         .catch(done);
     });
 
-    it('should delete list item', function (done: MochaDone): void {
+    it('should delete list item', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       const web = new Web(config.siteUrl);
@@ -130,7 +137,7 @@ for (let testConfig of TestsConfigs) {
     // SharePoint Online and On-Premise 2016 only
     if (!testConfig.legacy) {
 
-      it(`should fetch minimalmetadata`, function (done: MochaDone): void {
+      it(`should fetch minimalmetadata`, function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         sp.setup({
@@ -157,7 +164,7 @@ for (let testConfig of TestsConfigs) {
 
       });
 
-      it(`should fetch nometadata`, function (done: MochaDone): void {
+      it(`should fetch nometadata`, function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         sp.setup({
@@ -185,7 +192,7 @@ for (let testConfig of TestsConfigs) {
 
       });
 
-      it('should create list items in batch', function (done: MochaDone): void {
+      it('should create list items in batch', function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         const dragons = ['Jineoss', 'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
@@ -207,7 +214,7 @@ for (let testConfig of TestsConfigs) {
           .catch(done);
       });
 
-      it('should delete list items in batch', function (done: MochaDone): void {
+      it('should delete list items in batch', function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         const web = new Web(config.siteUrl);
@@ -234,7 +241,7 @@ for (let testConfig of TestsConfigs) {
 
     /*
     // DigestCache issue
-    it('should create a new list', function(done: MochaDone): void {
+    it('should create a new list', function(done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         sp.web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
@@ -249,7 +256,7 @@ for (let testConfig of TestsConfigs) {
     });
     */
 
-    it('should correctly consume baseUrl setting', function (done: MochaDone): void {
+    it('should correctly consume baseUrl setting', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       sp.setup({
@@ -279,7 +286,7 @@ for (let testConfig of TestsConfigs) {
         .catch(done);
     });
 
-    after('Deleting test objects', function (done: MochaDone): void {
+    after('Deleting test objects', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       let digest: string;

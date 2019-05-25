@@ -4,6 +4,7 @@
 
 [![npm version](https://badge.fury.io/js/sp-pnp-node.svg)](https://badge.fury.io/js/sp-pnp-node)
 [![Downloads](https://img.shields.io/npm/dm/sp-pnp-node.svg)](https://www.npmjs.com/package/sp-pnp-node)
+![Build Status](https://koltyakov.visualstudio.com/SPNode/_apis/build/status/sp-pnp-node?branchName=master)
 ![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)
 
 > Consider using [pnp-auth](https://github.com/SharePoint-NodeJS/pnp-auth) as a successor which soaked the best of `sp-pnp-node` and `node-pnp-sp` libraries. I'm keeping `sp-pnp-node` not archived and update it from time to time only because of some production implementations which I'm too lazy to migrate to `pnp-auth` right away.

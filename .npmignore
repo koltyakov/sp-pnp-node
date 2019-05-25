@@ -8,3 +8,4 @@ examples/
 .vscode/
 tsconfig.json
 tslint.json
+.env
