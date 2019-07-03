@@ -10,7 +10,9 @@
     "tsc": "tsc -p .",
     "clean": "rimraf ./dist",
     "test": "ts-node ./test/init && mocha --opts test/mocha.opts || ECHO.",
-    "test:ci": "mocha --opts test/mocha.opts --ci || ECHO."
+    "test:ci": "mocha --opts test/mocha.opts --ci || ECHO.",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "sharepoint",
@@ -31,7 +33,8 @@
   "homepage": "https://github.com/koltyakov/sp-pnp-node#readme",
   "dependencies": {
     "node-fetch": "^2.6.0",
-    "node-sp-auth-config": "^2.6.4"
+    "node-sp-auth-config": "^2.6.4",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@pnp/pnpjs": "^1.3.2",
@@ -53,5 +56,6 @@
     "tslint": "^5.16.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.4.5"
-  }
+  },
+  "snyk": true
 }
