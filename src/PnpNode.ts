@@ -7,9 +7,10 @@ import * as https from 'https';
 import * as path from 'path';
 import { Cpass } from 'cpass';
 import { AuthConfig as SPAuthConfigirator } from 'node-sp-auth-config';
+import * as crc from 'crc-32';
 
 import { Utils } from './utils';
-import { IPnpNodeSettings } from './interfaces';
+import { IPnpNodeSettings } from './IPnpNode';
 
 declare var global: any;
 
@@ -61,34 +62,42 @@ export class PnpNode implements HttpClientImpl {
     }
 
     // Authenticate with node-sp-auth and inject auth headers
-    return spauth.getAuth(url, this.settings.authOptions)
-      .then((data: any) => {
-        // Merge options and headers
-        const fetchOptions: any = {
-          ...options,
-          ...data.options,
-          headers: this.utils.mergeHeaders({
-            'Accept': 'application/json;odata=verbose',
-            'Content-Type': 'application/json;odata=verbose'
-          }, options.headers, data.headers)
-        };
+    return spauth.getAuth(url, this.settings.authOptions).then((data: any) => {
+      // Merge options and headers
+      const fetchOptions: any = {
+        ...options,
+        ...data.options,
+        headers: this.utils.mergeHeaders({
+          'Accept': 'application/json;odata=verbose',
+          'Content-Type': 'application/json;odata=verbose'
+        }, options.headers, data.headers)
+      };
 
-        // On-Prem 2013 issue with `accept: application/json`
-        if (this.utils.isOnPrem(url) && this.settings.envCode === '15') {
-          const disallowed = ['application/json'];
-          if (disallowed.indexOf(fetchOptions.headers.get('accept')) !== -1) {
-            fetchOptions.headers.set('accept', 'application/json;odata=verbose');
-          }
+      // On-Prem 2013 issue with `accept: application/json`
+      if (this.utils.isOnPrem(url) && this.settings.envCode === '15') {
+        const disallowed = ['application/json'];
+        if (disallowed.indexOf(fetchOptions.headers.get('accept')) !== -1) {
+          fetchOptions.headers.set('accept', 'application/json;odata=verbose');
         }
+      }
 
-        if (this.utils.isUrlHttps(url) && !fetchOptions.agent) {
-          // Bypassing ssl certificate errors (self signed, etc) for on-premise
-          fetchOptions.agent = this.agent;
-        }
+      if (this.utils.isUrlHttps(url) && !fetchOptions.agent) {
+        // Bypassing ssl certificate errors (self signed, etc) for on-premise
+        fetchOptions.agent = this.agent;
+      }
 
-        // Return actual request promise
-        return fetch(url, fetchOptions);
-      }) as any;
+      const authOptions: any = this.settings.authOptions as any || { empty: true };
+      const authClientId = authOptions.username || authOptions.clientId || 'unknown';
+      const authCredsHash = authOptions.empty ? 'empty' : crc.str(JSON.stringify(authOptions)).toString(16);
+
+      if (this.settings.fetchSpy && this.settings.fetchSpy.beforeRequest) {
+        this.settings.fetchSpy.beforeRequest(url, fetchOptions, authClientId, authCredsHash);
+      }
+
+      // Return actual request promise
+      return fetch(url, fetchOptions);
+
+    });
   }
 
   public init = (): Promise<IPnpNodeSettings> => {
@@ -102,9 +111,7 @@ export class PnpNode implements HttpClientImpl {
             };
             resolve(this.settings);
           })
-          .catch((error: any) => {
-            reject(error);
-          });
+          .catch(reject);
       } else {
         resolve(this.settings);
       }

@@ -1,2 +1,2 @@
 export { PnpNode } from './PnpNode';
-export { IPnpNodeSettings } from './interfaces';
+export { IPnpNodeSettings, FetchSpy } from './IPnpNode';
