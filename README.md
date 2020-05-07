@@ -18,7 +18,7 @@ PnPjs Client Side Libraries for Microsoft 365 was created to help developers by 
 ## Supported SharePoint versions
 
 - SharePoint Online
-- SharePoint 2019/16/13
+- SharePoint On-Prem (2019, 2016, 2013)
 
 ## Install
 
