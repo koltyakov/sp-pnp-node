@@ -5,10 +5,10 @@ import * as sprequest from 'sp-request';
 import { Cpass } from 'cpass';
 import { IAuthContext } from 'node-sp-auth-config';
 
-import { PnpNode, IPnpNodeSettings } from '../../src';
+import { PnpNode, IPnpNodeSettings } from '../src';
 
-import { Environments } from '../configs';
-import { getAuthCtx } from './misc';
+import { Environments } from './configs';
+import { getAuthCtx } from './auth';
 
 const cpass = new Cpass();
 

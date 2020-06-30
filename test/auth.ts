@@ -1,6 +1,6 @@
 import { AuthConfig, IAuthContext } from 'node-sp-auth-config';
 import { getAuth as getNodeAuth } from 'node-sp-auth';
-import { ICiEnvironmentConfig, IPrivateEnvironmentConfig, IEnvironmentConfig } from '../configs';
+import { ICiEnvironmentConfig, IPrivateEnvironmentConfig, IEnvironmentConfig } from './configs';
 
 export const getAuthConf = (config: IEnvironmentConfig) => {
   const proxySettings =
