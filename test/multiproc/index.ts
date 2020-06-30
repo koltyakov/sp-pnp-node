@@ -40,7 +40,4 @@ export const startWorkflowProcess = (transport: IWorkerTransport): Promise<{ cod
   console.log('Done');
 
 })()
-  .catch((error) => {
-    console.warn(error);
-    // process.exit(1);
-  });
+  .catch(console.warn);

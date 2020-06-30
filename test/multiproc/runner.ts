@@ -1,4 +1,4 @@
-import { sp } from '@pnp/sp';
+import { sp } from '@pnp/sp-commonjs';
 import { PnpNode } from '../../src/PnpNode';
 
 import { IWorkerTransport } from './index';

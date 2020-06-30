@@ -14,7 +14,8 @@ const config = {
     quotes: [2, 'single', 'avoid-escape'],
     indent: ['error', 2],
     'arrow-parens': ['error', 'always'],
-    'no-var-requires': 0
+    'no-var-requires': 0,
+    'no-explicit-any': 0
   },
   settings: {
     react: {

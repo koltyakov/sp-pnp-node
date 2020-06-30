@@ -20,6 +20,8 @@ global.Response = nodeFetch.Response;
 
 export class PnpNode implements IHttpClientImpl {
 
+  public clientInstance = 'default';
+
   private settings: IPnpNodeSettings;
   private spAuthConfigirator: SPAuthConfigirator;
   private agent: https.Agent;
@@ -49,7 +51,10 @@ export class PnpNode implements IHttpClientImpl {
       keepAlive: true,
       keepAliveMsecs: 10000
     });
-    global.fetch = this.fetch;
+    this.clientInstance = settings.clientInstance || 'default';
+    if (this.clientInstance) {
+      global.fetch = this.fetch;
+    }
   }
 
   public fetch = (url: string, options: IFetchOptions): Promise<any> => {

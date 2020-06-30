@@ -14,4 +14,5 @@ export interface IPnpNodeSettings {
   fetchSpy?: {
     beforeRequest?: FetchSpy;
   };
+  clientInstance?: string;
 }
