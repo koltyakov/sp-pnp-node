@@ -12,7 +12,7 @@ import * as crc from 'crc-32';
 import { Utils } from './utils';
 import { IPnpNodeSettings } from './IPnpNode';
 
-declare var global: any;
+declare let global: any;
 
 global.Headers = nodeFetch.Headers;
 global.Request = nodeFetch.Request;

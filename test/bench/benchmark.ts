@@ -3,6 +3,7 @@ import { PnpNode, IPnpNodeSettings } from '../../src';
 
 (async () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const config = require('../config/integration/private.2016.json');
 
   const pnpNodeSettings: IPnpNodeSettings = {

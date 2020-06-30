@@ -1,8 +1,0 @@
-{
-  "extends": "tslint:latest",
-  "rules": {
-    "semicolon": [true, "always", "ignore-interfaces"],
-    "no-implicit-dependencies": false,
-    "no-console": false
-  }
-}

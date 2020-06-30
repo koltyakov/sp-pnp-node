@@ -5,18 +5,18 @@ import { ICiEnvironmentConfig, IPrivateEnvironmentConfig, IEnvironmentConfig } f
 export const getAuthConf = (config: IEnvironmentConfig) => {
   const proxySettings =
     typeof (config as IPrivateEnvironmentConfig).configPath !== 'undefined'
-    ? { // Local test mode
-      configPath: (config as IPrivateEnvironmentConfig).configPath
-    }
-    : { // Headless/CI mode
-      authConfigSettings: {
-        headlessMode: true,
-        authOptions: {
-          siteUrl: (config as ICiEnvironmentConfig).siteUrl,
-          ...(config as ICiEnvironmentConfig).authOptions
-        }
+      ? { // Local test mode
+        configPath: (config as IPrivateEnvironmentConfig).configPath
       }
-    };
+      : { // Headless/CI mode
+        authConfigSettings: {
+          headlessMode: true,
+          authOptions: {
+            siteUrl: (config as ICiEnvironmentConfig).siteUrl,
+            ...(config as ICiEnvironmentConfig).authOptions
+          }
+        }
+      };
   return proxySettings;
 };
 

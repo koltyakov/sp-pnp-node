@@ -55,34 +55,34 @@ for (const testConfig of Environments) {
         .catch(done);
     });
 
-    it(`should get web's title`, function (done: Mocha.Done): void {
+    it('should get web\'s title', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       request.get(`${config.siteUrl}/_api/web?$select=Title`)
-        .then(response => {
+        .then((response) => {
           return Promise.all([
             sp.web.select('Title').get(),
             response.body.d.Title
           ]);
         })
-        .then(response => {
+        .then((response) => {
           expect(response[0].Title).to.equal(response[1]);
           done();
         })
         .catch(done);
     });
 
-    it(`should get lists on web`, function (done: Mocha.Done): void {
+    it('should get lists on web', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
       request.get(`${config.siteUrl}/_api/web/lists?$select=Title`)
-        .then(response => {
+        .then((response) => {
           return Promise.all([
             sp.web.lists.select('Title').get(),
             response.body.d.results
           ]);
         })
-        .then(response => {
+        .then((response) => {
           expect(response[0].length).to.equal(response[1].length);
           done();
         })
@@ -94,10 +94,10 @@ for (const testConfig of Environments) {
 
       const web = new Web(config.siteUrl);
       web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
-        .then(_ => {
+        .then((_) => {
           return sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
         })
-        .then(response => {
+        .then((response) => {
           expect(response.Title).to.equal(testVariables.newListName);
           done();
         })
@@ -110,10 +110,10 @@ for (const testConfig of Environments) {
       const web = new Web(config.siteUrl);
       const list = web.lists.getByTitle(testVariables.newListName);
       list.items.add({ Title: 'New item' })
-        .then(_ => {
+        .then((_) => {
           return list.items.select('Title').get();
         })
-        .then(_ => {
+        .then((_) => {
           done();
         })
         .catch(done);
@@ -125,10 +125,10 @@ for (const testConfig of Environments) {
       const web = new Web(config.siteUrl);
       const list = web.lists.getByTitle(testVariables.newListName);
       list.items.select('Id').top(1).get()
-        .then(response => {
+        .then((response) => {
           return list.items.getById(response[0].Id).delete();
         })
-        .then(_ => {
+        .then((_) => {
           done();
         })
         .catch(done);
@@ -137,7 +137,7 @@ for (const testConfig of Environments) {
     // SharePoint Online and On-Premise 2016 only
     if (!testConfig.legacy) {
 
-      it(`should fetch minimalmetadata`, function (done: Mocha.Done): void {
+      it('should fetch minimalmetadata', function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         sp.setup({
@@ -150,7 +150,7 @@ for (const testConfig of Environments) {
 
         const web = new Web(config.siteUrl);
         web.get()
-          .then(response => {
+          .then((response) => {
             sp.setup({
               sp: {
                 headers: undefined
@@ -164,7 +164,7 @@ for (const testConfig of Environments) {
 
       });
 
-      it(`should fetch nometadata`, function (done: Mocha.Done): void {
+      it('should fetch nometadata', function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
         sp.setup({
@@ -177,7 +177,7 @@ for (const testConfig of Environments) {
 
         const web = new Web(config.siteUrl);
         web.get()
-          .then(response => {
+          .then((response) => {
             sp.setup({
               sp: {
                 headers: undefined
@@ -203,7 +203,7 @@ for (const testConfig of Environments) {
 
         const batch = web.createBatch();
 
-        dragons.forEach(dragon => {
+        dragons.forEach((dragon) => {
           list.items.inBatch(batch).add({ Title: dragon });
         });
 
@@ -221,16 +221,16 @@ for (const testConfig of Environments) {
         const list = web.lists.getByTitle(testVariables.newListName);
 
         list.items.select('Id').get()
-          .then(response => {
-            let batch = web.createBatch();
+          .then((response) => {
+            const batch = web.createBatch();
 
-            response.forEach(item => {
+            response.forEach((item) => {
               list.items.inBatch(batch).getById(item.Id).delete();
             });
 
             return batch.execute();
           })
-          .then(_ => {
+          .then((_) => {
             done();
           })
           .catch(done);
@@ -266,13 +266,13 @@ for (const testConfig of Environments) {
       });
 
       request.get(`${config.siteUrl}/_api/web?$select=Title`)
-        .then(response => {
+        .then((response) => {
           return Promise.all([
             sp.web.select('Title').get(),
             response.body.d.Title
           ]);
         })
-        .then(response => {
+        .then((response) => {
           expect(response[0].Title).to.equal(response[1]);
 
           sp.setup({
@@ -291,13 +291,13 @@ for (const testConfig of Environments) {
 
       let digest: string;
       request.requestDigest(config.siteUrl)
-        .then(response => {
+        .then((response) => {
           digest = response;
           return request.get(`${config.siteUrl}/_api/web/lists/getByTitle('${testVariables.newListName}')`)
-            .then(_ => {
+            .then((_) => {
               return 'can delete';
             })
-            .catch(ex => {
+            .catch((ex) => {
               if (ex.statusCode === 404) {
                 return ''; // Do not try to delete if wasn't created
               } else {
