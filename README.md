@@ -18,22 +18,12 @@ PnPjs Client Side Libraries for Microsoft 365 was created to help developers by 
 ## Supported SharePoint versions
 
 - SharePoint Online
-- SharePoint 2013
-- SharePoint 2016
-- SharePoint 2019
+- SharePoint On-Prem (2019, 2016, 2013)
 
 ## Install
 
-### NPM
-
 ```bash
-npm install sp-pnp-node @pnp/pnpjs --save
-```
-
-### Yarn
-
-```bash
-yarn add sp-pnp-node @pnp/pnpjs
+npm install sp-pnp-node @pnp/pnpjs@^1.3.11
 ```
 
 ## Usage examples
