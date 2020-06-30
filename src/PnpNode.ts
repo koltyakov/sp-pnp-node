@@ -1,4 +1,4 @@
-import { HttpClientImpl, FetchOptions } from '@pnp/common';
+import { IHttpClientImpl, IFetchOptions } from '@pnp/common-commonjs';
 import * as spauth from 'node-sp-auth';
 import * as nodeFetch from 'node-fetch';
 // tslint:disable-next-line:no-duplicate-imports
@@ -18,7 +18,7 @@ global.Headers = nodeFetch.Headers;
 global.Request = nodeFetch.Request;
 global.Response = nodeFetch.Response;
 
-export class PnpNode implements HttpClientImpl {
+export class PnpNode implements IHttpClientImpl {
 
   private settings: IPnpNodeSettings;
   private spAuthConfigirator: SPAuthConfigirator;
@@ -52,7 +52,7 @@ export class PnpNode implements HttpClientImpl {
     global.fetch = this.fetch;
   }
 
-  public fetch = (url: string, options: FetchOptions): Promise<any> => {
+  public fetch = (url: string, options: IFetchOptions): Promise<any> => {
     if (!this.utils.isUrlAbsolute(url)) {
       if (this.settings.siteUrl) {
         url = this.utils.combineUrl(this.settings.siteUrl, url);

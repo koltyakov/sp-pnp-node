@@ -1,6 +1,6 @@
 import * as mocha from 'mocha';
 import { expect } from 'chai';
-import { sp, Web } from '@pnp/sp';
+import { sp, Web } from '@pnp/sp-commonjs/presets/all';
 import * as sprequest from 'sp-request';
 import { Cpass } from 'cpass';
 import { IAuthContext } from 'node-sp-auth-config';
@@ -92,7 +92,7 @@ for (const testConfig of Environments) {
     it('should create a new list', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
-      const web = new Web(config.siteUrl);
+      const web = Web(config.siteUrl);
       web.lists.add(testVariables.newListName, 'This list was created for test purposes', 100)
         .then((_) => {
           return sp.web.lists.getByTitle(testVariables.newListName).select('Title').get();
@@ -107,7 +107,7 @@ for (const testConfig of Environments) {
     it('should create list item', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
-      const web = new Web(config.siteUrl);
+      const web = Web(config.siteUrl);
       const list = web.lists.getByTitle(testVariables.newListName);
       list.items.add({ Title: 'New item' })
         .then((_) => {
@@ -122,7 +122,7 @@ for (const testConfig of Environments) {
     it('should delete list item', function (done: Mocha.Done): void {
       this.timeout(30 * 1000);
 
-      const web = new Web(config.siteUrl);
+      const web = Web(config.siteUrl);
       const list = web.lists.getByTitle(testVariables.newListName);
       list.items.select('Id').top(1).get()
         .then((response) => {
@@ -148,7 +148,7 @@ for (const testConfig of Environments) {
           }
         });
 
-        const web = new Web(config.siteUrl);
+        const web = Web(config.siteUrl);
         web.get()
           .then((response) => {
             sp.setup({
@@ -175,7 +175,7 @@ for (const testConfig of Environments) {
           }
         });
 
-        const web = new Web(config.siteUrl);
+        const web = Web(config.siteUrl);
         web.get()
           .then((response) => {
             sp.setup({
@@ -198,7 +198,7 @@ for (const testConfig of Environments) {
         const dragons = ['Jineoss', 'Zyna', 'Bothir', 'Jummerth', 'Irgonth', 'Kilbiag',
           'Berget', 'Lord', 'Podocrurth', 'Jiembyntet', 'Rilrayrarth'];
 
-        const web = new Web(config.siteUrl);
+        const web = Web(config.siteUrl);
         const list = web.lists.getByTitle(testVariables.newListName);
 
         const batch = web.createBatch();
@@ -217,7 +217,7 @@ for (const testConfig of Environments) {
       it('should delete list items in batch', function (done: Mocha.Done): void {
         this.timeout(30 * 1000);
 
-        const web = new Web(config.siteUrl);
+        const web = Web(config.siteUrl);
         const list = web.lists.getByTitle(testVariables.newListName);
 
         list.items.select('Id').get()
@@ -294,7 +294,7 @@ for (const testConfig of Environments) {
         .then((response) => {
           digest = response;
           return request.get(`${config.siteUrl}/_api/web/lists/getByTitle('${testVariables.newListName}')`)
-            .then((_) => {
+            .then(() => {
               return 'can delete';
             })
             .catch((ex) => {

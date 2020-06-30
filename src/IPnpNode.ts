@@ -1,9 +1,9 @@
 import { IAuthOptions } from 'node-sp-auth';
 import { IAuthConfigSettings } from 'node-sp-auth-config';
 import { AgentOptions } from 'https';
-import { FetchOptions } from '@pnp/common';
+import { IFetchOptions } from '@pnp/common-commonjs';
 
-export type FetchSpy = (url: string, options: FetchOptions, authClientId: string, authCredsHash: string) => void;
+export type FetchSpy = (url: string, options: IFetchOptions, authClientId: string, authCredsHash: string) => void;
 
 export interface IPnpNodeSettings {
   siteUrl?: string;
