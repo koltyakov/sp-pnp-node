@@ -33,7 +33,7 @@
   "dependencies": {
     "crc-32": "^1.2.0",
     "node-fetch": "^2.6.1",
-    "node-sp-auth-config": "^3.0.1"
+    "node-sp-auth-config": "^3.0.3"
   },
   "devDependencies": {
     "@pnp/sp-commonjs": "^2.0.10",
